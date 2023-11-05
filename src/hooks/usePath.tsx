@@ -10,7 +10,7 @@ type GenerateTabShapePath = (
 ) => string;
 
 const NUM_TABS = 4;
-const SCALE = 0.7;
+const SCALE = 1;
 const TAB_BAR_HEIGHT = 64;
 
 const generateTabShapePath: GenerateTabShapePath = (

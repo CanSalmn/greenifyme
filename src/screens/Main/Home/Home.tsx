@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import { Colors } from '../../../constants/Colors';
 
 
 export default function Home() {
@@ -39,7 +39,7 @@ export default function Home() {
 
     return (
 
-        <View>
+        <View style={{ flex: 1, backgroundColor: Colors.primaryBrandColor }}>
             <Text> home</Text>
         </View>
 

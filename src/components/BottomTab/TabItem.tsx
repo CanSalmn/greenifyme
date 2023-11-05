@@ -11,13 +11,13 @@ import {getPathXCenterByIndex} from '../../utils/Path';
 import usePath from '../../hooks/usePath';
 import {SCREEN_WIDTH} from '../../constants/Screen';
 export type TabProps = {
-  label: string;
+  label?: string;
   icon: string;
   index: number;
   activeIndex: number;
   onTabPress: () => void;
 };
-const ICON_SIZE = 25;
+const ICON_SIZE = 45;
 const LABEL_WIDTH = SCREEN_WIDTH / 4;
 const AnimatedIcon = Animated.createAnimatedComponent(Feather);
 const TabItem: FC<TabProps> = ({
@@ -33,19 +33,20 @@ const TabItem: FC<TabProps> = ({
   const labelPosition = getPathXCenterByIndex(curvedPaths, index);
 
   const tabStyle = useAnimatedStyle(() => {
-    const translateY = animatedActiveIndex.value - 1 === index ? -35 : 20;
+    const translateY = animatedActiveIndex.value - 1 === index ? -50 : 20;
     const iconPositionX = iconPosition - index * ICON_SIZE;
     return {
       width: ICON_SIZE,
       height: ICON_SIZE,
       transform: [
         {translateY: withTiming(translateY)},
-        {translateX: iconPositionX - ICON_SIZE / 2},
+        {translateX: iconPositionX - ICON_SIZE / 2.3},
       ],
     };
   });
+
   const labelContainerStyle = useAnimatedStyle(() => {
-    const translateY = animatedActiveIndex.value - 1 === index ? 36 : 100;
+    const translateY = animatedActiveIndex.value - 1 === index ? 50 : 100;
     return {
       transform: [
         {translateY: withTiming(translateY)},
@@ -53,6 +54,7 @@ const TabItem: FC<TabProps> = ({
       ],
     };
   });
+
   const iconColor = useSharedValue(
     activeIndex === index + 1 ? 'white' : 'rgba(128,128,128,0.8)',
   );
@@ -61,7 +63,7 @@ const TabItem: FC<TabProps> = ({
   useEffect(() => {
     animatedActiveIndex.value = activeIndex;
     if (activeIndex === index + 1) {
-      iconColor.value = withTiming('white');
+      iconColor.value = withTiming('rgba(128,128,128,0.8)');
     } else {
       iconColor.value = withTiming('rgba(128,128,128,0.8)');
     }
@@ -80,7 +82,7 @@ const TabItem: FC<TabProps> = ({
           onPress={onTabPress}>
           <AnimatedIcon
             name={icon}
-            size={25}
+            size={40}
             animatedProps={animatedIconProps}
           />
         </Pressable>
@@ -102,6 +104,6 @@ const styles = StyleSheet.create({
   },
   label: {
     color: 'rgba(128,128,128,0.8)',
-    fontSize: 17,
+    fontSize: 13,
   },
 });

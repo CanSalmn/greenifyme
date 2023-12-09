@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { Button, Text, View } from 'react-native';
+import { useColorScheme,Appearance } from 'react-native';
+
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from '../../../constants/Colors';
 
-
+import { useTheme } from 'react-native-paper';
 export default function Home() {
     const navigation = useNavigation()
 
-
+    const theme = useTheme()
 
     const BottomTabsData = [
         {
@@ -37,10 +39,16 @@ export default function Home() {
         },
     ];
 
+
+
+
+    
     return (
 
-        <View style={{ flex: 1, backgroundColor: Colors.primaryBrandColor }}>
-            <Text> home</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ color: theme.colors.primary }}> home</Text>
+
+        
         </View>
 
     );

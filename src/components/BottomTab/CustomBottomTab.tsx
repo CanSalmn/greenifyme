@@ -1,22 +1,21 @@
-import React, { FC, useMemo, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import React, { FC, useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import Svg, { Path } from "react-native-svg";
 import Animated, {
   runOnJS,
   useAnimatedProps,
   useSharedValue,
   withTiming,
-} from 'react-native-reanimated';
-import { interpolatePath } from 'react-native-redash';
+} from "react-native-reanimated";
+import { interpolatePath } from "react-native-redash";
 
-import { SCREEN_WIDTH } from '../../constants/Screen';
-import { Colors } from '../../constants/Colors';
-import usePath from '../../hooks/usePath';
-import { getPathXCenter } from '../../utils/Path';
-import TabItem from './TabItem';
-import AnimatedCircle from './AnimatedCircle';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-
+import { SCREEN_WIDTH } from "../../constants/Screen";
+import { Colors } from "../../constants/Colors";
+import usePath from "../../hooks/usePath";
+import { getPathXCenter } from "../../utils/Path";
+import TabItem from "./TabItem";
+import AnimatedCircle from "./AnimatedCircle";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 export const CustomBottomTab: FC<BottomTabBarProps> = ({
@@ -32,23 +31,23 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
   };
   const selectIcon = (routeName: string) => {
     switch (routeName) {
-      case 'Products':
-        return 'home';
-      case 'Cart':
-        return 'shopping-bag';
-      case 'Favourites':
-        return 'star';
-      case 'Profile':
-        return 'user';
+      case "Products":
+        return "home";
+      case "Cart":
+        return "shopping-bag";
+      case "Favourites":
+        return "star";
+      case "Profile":
+        return "user";
       default:
-        return 'home';
+        return "home";
     }
   };
   const animatedProps = useAnimatedProps(() => {
     const currentPath = interpolatePath(
       progress.value,
       Array.from({ length: curvedPaths.length }, (_, index) => index + 1),
-      curvedPaths,
+      curvedPaths
     );
     runOnJS(handleMoveCircle)(currentPath);
     return {
@@ -65,7 +64,10 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
     <View style={styles.tabBarContainer}>
       {/* alt bar */}
       <Svg width={SCREEN_WIDTH} height={tHeight} style={styles.shadowMd}>
-        <AnimatedPath fill={Colors.secondaryBrandColor} animatedProps={animatedProps} />
+        <AnimatedPath
+          fill={Colors.secondaryBrandColor}
+          animatedProps={animatedProps}
+        />
       </Svg>
 
       {/* daire */}
@@ -78,7 +80,8 @@ export const CustomBottomTab: FC<BottomTabBarProps> = ({
           {
             height: tHeight,
           },
-        ]}>
+        ]}
+      >
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const label = options.tabBarLabel ? options.tabBarLabel : route.name;
@@ -103,18 +106,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tabBarContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     zIndex: 2,
   },
   tabItemsContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    width: '100%',
+    position: "absolute",
+    flexDirection: "row",
+    width: "100%",
   },
   shadowMd: {
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 3 },

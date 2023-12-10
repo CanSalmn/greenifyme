@@ -1,15 +1,15 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {FC, useEffect} from 'react';
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { FC, useEffect } from "react";
 import Animated, {
   useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from 'react-native-reanimated';
-import Feather from 'react-native-vector-icons/Feather';
-import {getPathXCenterByIndex} from '../../utils/Path';
-import usePath from '../../hooks/usePath';
-import {SCREEN_WIDTH} from '../../constants/Screen';
+} from "react-native-reanimated";
+import Feather from "react-native-vector-icons/Feather";
+import { getPathXCenterByIndex } from "../../utils/Path";
+import usePath from "../../hooks/usePath";
+import { SCREEN_WIDTH } from "../../constants/Screen";
 export type TabProps = {
   label?: string;
   icon: string;
@@ -27,7 +27,7 @@ const TabItem: FC<TabProps> = ({
   activeIndex,
   onTabPress,
 }) => {
-  const {curvedPaths} = usePath();
+  const { curvedPaths } = usePath();
   const animatedActiveIndex = useSharedValue(activeIndex);
   const iconPosition = getPathXCenterByIndex(curvedPaths, index);
   const labelPosition = getPathXCenterByIndex(curvedPaths, index);
@@ -39,8 +39,8 @@ const TabItem: FC<TabProps> = ({
       width: ICON_SIZE,
       height: ICON_SIZE,
       transform: [
-        {translateY: withTiming(translateY)},
-        {translateX: iconPositionX - ICON_SIZE / 2.3},
+        { translateY: withTiming(translateY) },
+        { translateX: iconPositionX - ICON_SIZE / 2.3 },
       ],
     };
   });
@@ -49,23 +49,23 @@ const TabItem: FC<TabProps> = ({
     const translateY = animatedActiveIndex.value - 1 === index ? 50 : 100;
     return {
       transform: [
-        {translateY: withTiming(translateY)},
-        {translateX: labelPosition - LABEL_WIDTH / 2},
+        { translateY: withTiming(translateY) },
+        { translateX: labelPosition - LABEL_WIDTH / 2 },
       ],
     };
   });
 
   const iconColor = useSharedValue(
-    activeIndex === index + 1 ? 'white' : 'rgba(128,128,128,0.8)',
+    activeIndex === index + 1 ? "white" : "rgba(128,128,128,0.8)"
   );
 
   //Adjust Icon color for this first render
   useEffect(() => {
     animatedActiveIndex.value = activeIndex;
     if (activeIndex === index + 1) {
-      iconColor.value = withTiming('rgba(128,128,128,0.8)');
+      iconColor.value = withTiming("rgba(128,128,128,0.8)");
     } else {
-      iconColor.value = withTiming('rgba(128,128,128,0.8)');
+      iconColor.value = withTiming("rgba(128,128,128,0.8)");
     }
   }, [activeIndex]);
 
@@ -78,8 +78,9 @@ const TabItem: FC<TabProps> = ({
         <Pressable
           testID={`tab${label}`}
           //Increasing touchable Area
-          hitSlop={{top: 30, bottom: 30, left: 50, right: 50}}
-          onPress={onTabPress}>
+          hitSlop={{ top: 30, bottom: 30, left: 50, right: 50 }}
+          onPress={onTabPress}
+        >
           <AnimatedIcon
             name={icon}
             size={40}
@@ -98,12 +99,12 @@ export default TabItem;
 
 const styles = StyleSheet.create({
   labelContainer: {
-    position: 'absolute',
-    alignItems: 'center',
+    position: "absolute",
+    alignItems: "center",
     width: LABEL_WIDTH,
   },
   label: {
-    color: 'rgba(128,128,128,0.8)',
+    color: "rgba(128,128,128,0.8)",
     fontSize: 13,
   },
 });

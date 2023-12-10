@@ -1,2 +1,3 @@
 export { default as TextInput } from "./TextInput";
-export * from "./Button";
+export { default as Image } from "./Image";
+ƒ

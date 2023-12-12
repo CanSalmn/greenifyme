@@ -4,7 +4,13 @@ import { w, h, m, p } from "../../../utils";
 import Image from "../../Image";
 import Button from "../../Button";
 
-const MaterialsCard = () => {
+
+interface IMaterialsCard {
+    ImageSource: string;
+    materialTitle: string;
+}
+
+const MaterialsCard = ({ ImageSource, materialTitle }) => {
     return (
         <View
             style={{
@@ -16,10 +22,12 @@ const MaterialsCard = () => {
                 borderRadius: 15,
                 flexDirection: "row",
                 alignItems: "center",
+                alignSelf: 'center',
+                marginBottom: m(15),
             }}
         >
             <Image
-                source={require("../../../../assets/images/Glass.png")}
+                source={ImageSource}
                 style={{
                     width: w(82),
                     height: h(70),
@@ -27,7 +35,7 @@ const MaterialsCard = () => {
                 }}
             />
             <View style={{ flex: 1, justifyContent: "center" }}>
-                <Text style={{ marginTop: m(15), fontSize: 18, fontWeight: '300' }}>Glass</Text>
+                <Text style={{ marginTop: m(15), fontSize: 18, fontWeight: '300' }}>{materialTitle}</Text>
                 <View
                     style={{
                         flexDirection: "row",

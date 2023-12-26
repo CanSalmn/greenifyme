@@ -36,35 +36,35 @@ export const TaskData = [
 export const MaterailData = [
     {
         materialTitle: "Glass",
-        ImageSource: require("../assets/images/Glass.png"),
+        ImageSource: require("../assets/images/Home/Glass.png"),
     },
     {
         materialTitle: "Paper",
-        ImageSource: require("../assets/images/Paper.png"),
+        ImageSource: require("../assets/images/Home/Paper.png"),
     },
     {
         materialTitle: "Bataries",
-        ImageSource: require("../assets/images/Bataries.png"),
+        ImageSource: require("../assets/images/Home/Bataries.png"),
     },
     {
         materialTitle: "Plastic",
-        ImageSource: require("../assets/images/Plastic.png"),
+        ImageSource: require("../assets/images/Home/Plastic.png"),
     },
     {
         materialTitle: "Metal",
-        ImageSource: require("../assets/images/Metal.png"),
+        ImageSource: require("../assets/images/Home/Metal.png"),
     },
     {
         materialTitle: "Organic",
-        ImageSource: require("../assets/images/Organic.png"),
+        ImageSource: require("../assets/images/Home/Organic.png"),
     },
     {
         materialTitle: "Oil",
-        ImageSource: require("../assets/images/Oil.png"),
+        ImageSource: require("../assets/images/Home/Oil.png"),
     },
     {
         materialTitle: "Medical Wastes",
-        ImageSource: require("../assets/images/MedicalWaste.png"),
+        ImageSource: require("../assets/images/Home/MedicalWaste.png"),
     },
 
 ];

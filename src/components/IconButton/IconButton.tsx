@@ -61,15 +61,12 @@ const App: React.FC<IconButtonProps> = ({
     ...rest
 }) => {
     const theme = useTheme();
-    const loginWithFacebook = () => {
-        console.log("Button pressed");
-    };
     const Icon: any = ICON_LIBRARIES[iconFamily]();
 
     return (
         <Pressable
             {...rest}
-            onPress={loginWithFacebook}
+            onPress={onPress}
             style={[IconStyle, styles.container]}
         >
             {icon ? (

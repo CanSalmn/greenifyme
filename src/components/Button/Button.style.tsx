@@ -13,7 +13,7 @@ const styles = (theme: MD3Theme) => StyleSheet.create({
         height: "100%",
         width: "auto",
         borderRadius: 25,
-        backgroundColor: "#5DB075",
+        backgroundColor: "#5db075",
         justifyContent: "center",
     },
     title: {

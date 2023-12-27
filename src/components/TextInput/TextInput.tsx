@@ -33,6 +33,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 fontSize: 16,
                 fontWeight: "500",
                 justifyContent: "center",
+                alignSelf: 'center',
                 backgroundColor: "#E8E8E8",
                 borderRadius: 10,
                 borderTopRightRadius: 10,

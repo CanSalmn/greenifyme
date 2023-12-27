@@ -7,7 +7,9 @@ import home from "../screens/Main/Home";
 import BottomTab from "./BottomTab";
 import Splash from "../screens/Splash";
 import Login from "../screens/Auth/Login";
+import Register from "../screens/Auth/Register";
 import OnBoarding from "../screens/OnBoarding";
+import ForgotPassword from "../screens/Auth/ForgotPassword";
 
 
 const Stack = createNativeStackNavigator();
@@ -23,16 +25,16 @@ const RootNavigator = () => {
           <Stack.Screen name={'Splash'} component={Splash} />
         </Stack.Group>
 
-         <Stack.Group navigationKey="AUTH">
+        <Stack.Group navigationKey="AUTH">
           <Stack.Screen name={'Login'} component={Login} />
-          {/* <Stack.Screen name={'Register'} component={Register} />
-          <Stack.Screen name={'Verification'} component={Verification} />
-          <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} /> */}
-        </Stack.Group> 
+          <Stack.Screen name={'Register'} component={Register} />
+          {/* <Stack.Screen name={'Verification'} component={Verification} /> */}
+          <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
+        </Stack.Group>
 
         <Stack.Group navigationKey="MAIN">
-          <Stack.Screen name={'BottomTab'} component={BottomTab} />
-        </Stack.Group> 
+          <Stack.Screen name={'DashBoard'} component={BottomTab} />
+        </Stack.Group>
 
         {/* <Stack.Group navigationKey="MENU">
           <Stack.Screen name={'Profile'} component={Profile} />

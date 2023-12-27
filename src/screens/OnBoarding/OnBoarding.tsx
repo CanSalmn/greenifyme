@@ -54,6 +54,7 @@ export default function OnBoarding({ navigation }) {
         }}
         source={require("../../../assets/images/people.png")}
       />
+      
       <IconButton
         icon="arrowright"
         iconFamily="AntDesign"

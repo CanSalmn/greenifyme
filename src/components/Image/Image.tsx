@@ -12,12 +12,12 @@ const App: React.FC<ImageProps> = ({
     return (
         <Image
             style={{
-                width:w(50),
-                height:h(50),
+                width: w(50),
+                height: h(50),
                 ...(typeof props.style === "object" ? props.style : {}),
             }}
             source={source}
-            contentFit="contain"
+            contentFit='contain'
             transition={500}
             onError={props.onError}
             placeholder={props.placeholder}

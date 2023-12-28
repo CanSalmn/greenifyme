@@ -19,7 +19,6 @@ const getCharacterValidationError = (str: string) => {
 };
 
 const validationSchema = Yup.object().shape({
-
   mail: Yup.string()
     .email("Please enter a valid email address")
     .required("Required"),
@@ -30,7 +29,6 @@ const validationSchema = Yup.object().shape({
     .matches(/[a-z]/, getCharacterValidationError("lowercase"))
     .matches(/[A-Z]/, getCharacterValidationError("uppercase"))
     .required("Required"),
-
 });
 
 export default function Login({ navigation }) {
@@ -41,185 +39,169 @@ export default function Login({ navigation }) {
   };
 
   const onPressLoginButton = ({ mail, password }) => {
-    if (mail === userLoginData.usermail && password === userLoginData.password) {
-      navigation.navigate("DashBoard")
+    if (
+      mail === userLoginData.usermail &&
+      password === userLoginData.password
+    ) {
+      navigation.navigate("DashBoard");
     } else {
-      return
+      return;
     }
-  }
+  };
   return (
-    <SafeAreaView style={{ flex: 1, position: 'relative' }}>
-      {/* <Header
-        HeaderColor={"red"}
-        title={"Sign Up"}
-        headerLeft={
-          <IconButton
-            icon="arrowright"
-            iconFamily="AntDesign"
-            IconStyle={{
-              backgroundColor: "#0F0E0E",
-              borderRadius: 50,
-              width: w(50),
-              height: h(40),
-              justifyContent: "center",
-              alignItems: "center",
-              position: "absolute",
-              bottom: m(40),
-              right: m(40),
+    <SafeAreaView style={{ flex: 1, position: "relative" }}>
+      <Header title={"Log In"} />
+   
+
+        <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
+          <Formik
+            initialValues={{ mail: "", password: "" }}
+            validationSchema={validationSchema}
+            onSubmit={(val: any) => {
+              onPressLoginButton(val);
             }}
-            size={45}
-            iconColor={"white"}
-            onPress={onPressButton}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <View>
+                <TextInput
+                  autoCapitalize="none"
+                  placeholder={"Email"}
+                  value={values.mail}
+                  secureTextEntry={false}
+                  onBlur={handleBlur("mail")}
+                  onChangeText={handleChange("mail")}
+                />
+                <Text
+                  style={{
+                    color: "red",
+                    alignSelf: "center",
+                    minWidth: w(340),
+                    fontSize: 16,
+                    marginLeft: m(10),
+                  }}
+                >
+                  <ErrorMessage name="mail" />
+                </Text>
+                <TextInput
+                  placeholder={"Password"}
+                  value={values.password}
+                  secureTextEntry={true}
+                  onBlur={handleBlur("password")}
+                  onChangeText={handleChange("password")}
+                />
+                <Text
+                  style={{
+                    color: "red",
+                    alignSelf: "center",
+                    minWidth: w(340),
+                    fontSize: 16,
+                    marginLeft: m(10),
+                  }}
+                >
+                  <ErrorMessage name="password" />
+                </Text>
+
+                <Pressable
+                  style={{
+                    flexDirection: "row",
+                    minWidth: w(340),
+                    marginLeft: m(20),
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onPress={() => setIsCheck(!isCheck)}
+                >
+                  <IconButton
+                    icon={
+                      isCheck ? "checkbox-blank-outline" : "checkbox-marked-outline"
+                    }
+                    iconFamily="MaterialCommunityIcons"
+                    size={20}
+                    iconColor={"#666666"}
+                  />
+
+                  <Text
+                    style={{
+                      marginLeft: m(5),
+                      flex: 1,
+                      letterSpacing: 1,
+                      color: "#666666",
+                    }}
+                  >
+                    Remember me!
+                  </Text>
+                </Pressable>
+                <Button
+                  title={"Log In"}
+                  onPress={() => handleSubmit()}
+                  containerStyle={{ marginTop: m(20) }}
+                />
+              </View>
+            )}
+          </Formik>
+          <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+            <Text
+              style={{
+                color: "#5DB075",
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                minWidth: w(340),
+                fontSize: 16,
+                lineHeight: 30,
+                marginTop: m(10),
+              }}
+            >
+              Forgot your password?
+            </Text>
+          </Pressable>
+          <Pressable onPress={() => navigation.navigate("Register")}>
+            <Text
+              style={{
+                color: "#5DB075",
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                minWidth: w(340),
+                fontSize: 16,
+                lineHeight: 30,
+                marginTop: m(10),
+              }}
+            >
+              Sign Up
+            </Text>
+          </Pressable>
+
+        </View>
+
+        <View style={{ justifyContent: 'flex-end', flex: 1, }}>
+          <Image
+            style={{
+              height: h(213),
+              width: w(340),
+              alignSelf: 'center',
+            }}
+            source={require("../../../../assets/images/recyclerPeople2.png")}
           />
-        }
-      /> */}
-      <View style={{ height: h(60), backgroundColor: 'red' }}>
-        <Text>Header</Text>
-      </View>
-      <Formik
-        initialValues={{ mail: "", password: "" }}
-        validationSchema={validationSchema}
-        onSubmit={(val: any) => {
-          onPressLoginButton(val)
+        </View>
 
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <View>
+  
 
-            <TextInput
-              placeholder={"Email"}
-              value={values.mail}
-              secureTextEntry={false}
-              onBlur={handleBlur("mail")}
-              onChangeText={handleChange("mail")}
-            />
-            <Text
-              style={{
-                color: "red",
-                alignSelf: "center",
-                minWidth: w(340),
-                fontSize: 16,
-                marginLeft: m(10),
-              }}
-            >
-              <ErrorMessage name="mail" />
-            </Text>
-            <TextInput
-              placeholder={"Password"}
-              value={values.password}
-              secureTextEntry={true}
-              onBlur={handleBlur("password")}
-              onChangeText={handleChange("password")}
-            />
-            <Text
-              style={{
-                color: "red",
-                alignSelf: "center",
-                minWidth: w(340),
-                fontSize: 16,
-                marginLeft: m(10),
-              }}
-            >
-              <ErrorMessage name="password" />
-            </Text>
-
-            <Pressable
-              style={{
-                flexDirection: "row",
-                minWidth: w(340),
-                marginLeft: m(20),
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => setIsCheck(!isCheck)}
-            >
-              <IconButton
-                icon={
-                  isCheck ? "checkbox-blank-outline" : "checkbox-marked-outline"
-                }
-                iconFamily="MaterialCommunityIcons"
-                size={20}
-                iconColor={"#666666"}
-              />
-
-              <Text
-                style={{
-                  marginLeft: m(5),
-                  flex: 1,
-                  letterSpacing: 1,
-                  color: "#666666",
-                }}
-              >
-                Remember me!
-              </Text>
-            </Pressable>
-            <Button
-              title={"Log In"}
-              onPress={() => handleSubmit()}
-              containerStyle={{ marginTop: m(20) }}
-            />
-          </View>
-        )}
-      </Formik>
-      <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
-        <Text
-          style={{
-            color: "#5DB075",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-            alignSelf: "center",
-            minWidth: w(340),
-            fontSize: 16,
-            lineHeight: 30,
-            marginTop: m(10),
-          }}
-        >
-          Forgot your password?
-        </Text>
-      </Pressable>
-      <Pressable onPress={() => navigation.navigate("Register")}>
-        <Text
-          style={{
-            color: "#5DB075",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-            alignSelf: "center",
-            minWidth: w(340),
-            fontSize: 16,
-            lineHeight: 30,
-            marginTop: m(10),
-          }}
-        >
-          Sign Up
-        </Text>
-      </Pressable>
-
-      <Image
-        style={{
-          position: 'absolute',
-          bottom: m(20),
-          height: h(213),
-          width: w(340),
-          alignSelf: "center",
-        }}
-        source={require("../../../../assets/images/recyclerPeople2.png")}
-      />
     </SafeAreaView>
   );
 }
 
 const userLoginData = {
-  "usermail": "admin@greenifyme.com",
-  "password": "123456Aa."
-}
+  usermail: "admin@greenifyme.com",
+  password: "123456Aa.",
+};

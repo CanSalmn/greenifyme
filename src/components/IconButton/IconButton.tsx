@@ -12,6 +12,8 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useTheme } from "react-native-paper";
 export type IconLibrary = {
@@ -24,6 +26,7 @@ const ICON_LIBRARIES: IconLibrary = {
     MaterialCommunityIcons: () => MaterialCommunityIcons,
     AntDesign: () => AntDesign,
     MaterialIcons: () => MaterialIcons,
+    EvilIcons: () => EvilIcons,
 };
 
 export type IconButtonProps = PressableProps & {
@@ -33,6 +36,7 @@ export type IconButtonProps = PressableProps & {
     | "MaterialCommunityIcons"
     | "FontAwesome"
     | "AntDesign"
+    | "EvilIcons"
     | "MaterialIcons";
     variant?: "text" | "contained" | "outline";
     size?: number;
@@ -81,5 +85,7 @@ const App: React.FC<IconButtonProps> = ({
 export default App;
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        flexDirection: "row",
+    },
 });

@@ -40,7 +40,11 @@ export default function ForgotPassword({ navigation }) {
                     }}
                     source={require("../../../../assets/images/ForgetPassword.png")}
                 />
-                <TextInput placeholder={"Email"} style={{ marginTop: m(30) }} />
+                <TextInput
+                    placeholder={"Email"}
+                    style={{ marginTop: m(30) }}
+                    autoCapitalize="none"
+                />
                 <Button
                     title={"Reset Password"}
                     containerStyle={{ marginTop: m(35) }}

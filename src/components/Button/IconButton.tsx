@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from "react";
 import {
   Pressable,
   Text,
@@ -6,9 +6,9 @@ import {
   ViewStyle,
   StyleSheet,
   PressableProps,
-} from 'react-native';
-import Feather from '@expo/vector-icons/Feather';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+} from "react-native";
+import Feather from "@expo/vector-icons/Feather";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export type IconLibrary = {
   [key: string]: () => React.ComponentType<any>;
@@ -22,35 +22,35 @@ const ICON_LIBRARIES: IconLibrary = {
 
 export type IconButtonProps = PressableProps & {
   icon: string;
-  iconFamily?: 'Feather' | 'MaterialCommunityIcons';
-  variant?: 'text' | 'contained' | 'outline';
-  size?: 'small' | 'medium' | 'big';
+  iconFamily?: "Feather" | "MaterialCommunityIcons";
+  variant?: "text" | "contained" | "outline";
+  size?: "small" | "medium" | "big";
   iconColor?: string;
-  roundness?: 'full' | 'medium' | 'small';
+  roundness?: "full" | "medium" | "small";
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
 };
 
 const IconButton: FC<IconButtonProps> = ({
   icon,
-  iconFamily = 'Feather',
-  variant = 'contained',
-  size = 'medium',
-  iconColor = 'white',
-  roundness = 'medium',
+  iconFamily = "Feather",
+  variant = "contained",
+  size = "medium",
+  iconColor = "white",
+  roundness = "medium",
   style = {},
   onPress,
   ...rest
 }: IconButtonProps) => {
   const Icon = ICON_LIBRARIES[iconFamily]();
-  const iconSize = size === 'big' ? 24 : size === 'medium' ? 16 : 12;
-  const buttonSize = size === 'big' ? 48 : size === 'medium' ? 36 : 24;
+  const iconSize = size === "big" ? 24 : size === "medium" ? 16 : 12;
+  const buttonSize = size === "big" ? 48 : size === "medium" ? 36 : 24;
 
   const buttonStyles = [
     styles.button,
     styles[`${variant}Button`],
     styles[`${roundness}Roundness`],
-    {width: buttonSize, height: buttonSize},
+    { width: buttonSize, height: buttonSize },
     style,
   ] as StyleProp<ViewStyle>;
 
@@ -58,11 +58,12 @@ const IconButton: FC<IconButtonProps> = ({
     <Pressable
       {...rest}
       onPress={onPress}
-      style={({pressed}) => [
+      style={({ pressed }) => [
         buttonStyles,
         pressed && styles.buttonPressed,
         pressed && styles.shadow,
-      ]}>
+      ]}
+    >
       <Icon name={icon} size={iconSize} color={iconColor} />
     </Pressable>
   );
@@ -73,22 +74,22 @@ export default IconButton;
 const styles = StyleSheet.create({
   button: {
     borderRadius: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonPressed: {
     opacity: 0.9,
   },
   containedButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
   },
   textButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   outlineButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: '#2196F3',
+    borderColor: "#2196F3",
   },
   fullRoundness: {
     borderRadius: 100,
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,

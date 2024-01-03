@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import Home from '../screens/Main/Home';
+import Profile from '../screens/Profile/Profile';
 import CustomBottomTab from '../components/BottomTab/CustomBottomTab';
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ export default function BottomTab() {
                 <Tab.Screen
                     options={{ tabBarLabel: 'Profile' }}
                     name="Profile"
-                    component={Home}
+                    component={Profile}
                 />
             </Tab.Group>
 

@@ -39,14 +39,15 @@ export default function Login({ navigation }) {
   };
 
   const onPressLoginButton = ({ mail, password }) => {
-    if (
-      mail === userLoginData.usermail &&
-      password === userLoginData.password
-    ) {
-      navigation.navigate("DashBoard");
-    } else {
-      return;
-    }
+    // if (
+    //   mail === userLoginData.usermail &&
+    //   password === userLoginData.password
+    // ) {
+    //   navigation.navigate("DashBoard");
+    // } else {
+    //   return;
+    // }
+    navigation.navigate("DashBoard");
   };
   return (
     <SafeAreaView style={{ flex: 1, position: "relative" }}>
@@ -56,7 +57,7 @@ export default function Login({ navigation }) {
         <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
           <Formik
             initialValues={{ mail: "", password: "" }}
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
             onSubmit={(val: any) => {
               onPressLoginButton(val);
             }}

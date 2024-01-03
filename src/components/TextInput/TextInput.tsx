@@ -4,12 +4,13 @@ import { TextInput as Input, TextInputProps } from "react-native-paper";
 import { w, h, m, p } from "../../utils";
 import { useTheme } from "react-native-paper";
 
-const TextInput: React.FC<TextInputProps> = ({
+const TextInput: React.FC<{ rightIconName?: string } & TextInputProps> = ({
     placeholder,
     label,
     value,
     secureTextEntry,
     onChangeText,
+    rightIconName,
     ...props
 }) => {
     const theme = useTheme();
@@ -47,11 +48,15 @@ const TextInput: React.FC<TextInputProps> = ({
             textColor={props.textColor}
             secureTextEntry={secureTextEntry && isSecure}
             right={
-                secureTextEntry && (
+                secureTextEntry ? (
                     <Input.Icon
                         style={{}}
                         onPress={() => setIsSecure((prev) => !prev)}
                         icon={isSecure ? "eye-off" : "eye"}
+                    />
+                ) : (
+                    <Input.Icon
+                        icon={rightIconName}
                     />
                 )
             }

@@ -1,10 +1,12 @@
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { h, m, w } from "../../../utils";
 import { Image, TextInput } from "../../../components";
 import Button from "../../../components/Button";
 
 export default function ForgotPassword({ navigation }) {
+    const [isVerified, setIsVerified] = useState(false);
+
     return (
         <SafeAreaView style={{ flex: 1, alignItems: "center" }}>
             <View style={{ marginTop: m(70) }}>
@@ -16,7 +18,7 @@ export default function ForgotPassword({ navigation }) {
                         marginBottom: m(20),
                     }}
                 >
-                    Forgot Password?
+                    {isVerified ? "Forgot Password?" : "Check Your Mail"}
                 </Text>
                 <Text
                     style={{
@@ -28,8 +30,9 @@ export default function ForgotPassword({ navigation }) {
                         letterSpacing: 1,
                     }}
                 >
-                    To reset your password, you need your email or mobile number that can
-                    be authenticated
+                    {isVerified
+                        ? "To reset your password, you need your email or mobile number that can be authenticated"
+                        : "We have sent the reset password to the email address example@example.com"}
                 </Text>
                 <Image
                     style={{
@@ -48,6 +51,7 @@ export default function ForgotPassword({ navigation }) {
                 <Button
                     title={"Reset Password"}
                     containerStyle={{ marginTop: m(35) }}
+                    onPress={() => setIsVerified(true)}
                 />
                 <Pressable onPress={() => navigation.navigate("Login")}>
                     <Text

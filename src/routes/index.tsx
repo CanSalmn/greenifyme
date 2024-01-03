@@ -10,6 +10,7 @@ import Login from "../screens/Auth/Login";
 import Register from "../screens/Auth/Register";
 import OnBoarding from "../screens/OnBoarding";
 import ForgotPassword from "../screens/Auth/ForgotPassword";
+import Profile from "../screens/Profile/Profile";
 
 
 const Stack = createNativeStackNavigator();
@@ -36,9 +37,9 @@ const RootNavigator = () => {
           <Stack.Screen name={'DashBoard'} component={BottomTab} />
         </Stack.Group>
 
-        {/* <Stack.Group navigationKey="MENU">
+        <Stack.Group navigationKey="Profile">
           <Stack.Screen name={'Profile'} component={Profile} />
-        </Stack.Group> */}
+        </Stack.Group>
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -49,7 +49,7 @@ export default function Register({ navigation }) {
                     <IconButton
                         icon="close"
                         iconFamily="EvilIcons"
-                        onPress={() => console.log("clicked")}
+                        onPress={() => navigation.navigate("Login")}
                         size={20}
                         iconColor="#BDBDBD"
                         //             IconStyle?: StyleProp<ViewStyle>;
@@ -59,7 +59,7 @@ export default function Register({ navigation }) {
                         style={{}}
                     />
                 }
-                headerRight={<Text style={{ color:'red'}}>Login</Text>}
+                headerRight={<Pressable onPress={()=> navigation.navigate("Login")}><Text style={{ color: "#5DB075",}}>Login</Text></Pressable>}
                 rightStyle={"  alignItems: 'flex-start', backgroundColor:'red"}
                 leftStlye={"justifyContent: 'flex-start' "}
             />
@@ -201,7 +201,7 @@ export default function Register({ navigation }) {
                         </View>
                     )}
                 </Formik>
-                <Pressable onPress={() => navigation.navigate("Login")}>
+                <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
                     <Text
                         style={{
                             color: "#5DB075",

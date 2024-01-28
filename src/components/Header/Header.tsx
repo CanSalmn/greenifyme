@@ -1,27 +1,20 @@
 import {
-    Animated,
-    I18nManager,
-    Platform,
     SafeAreaView,
     StatusBar,
     StyleSheet,
     Text,
     View,
+    ViewStyle,
 } from "react-native";
 import React, { ReactNode, useCallback } from "react";
-import {
-    useSafeAreaFrame,
-    useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { m } from "../../utils";
-
+import { p } from "../../utils";
 export default function Header({
     headerLeft,
     title,
     headerRight,
     containerStyle,
     centerStyle,
-    leftStlye,
+    leftStyle,
     rightStyle,
     barStyle = "dark-content",
 }: {
@@ -29,14 +22,13 @@ export default function Header({
     HeaderColor?: string;
     headerLeft?: ReactNode;
     headerRight?: ReactNode;
-    containerStyle?: any;
-    centerStyle?: any;
-    leftStlye?: any;
-    rightStyle?: any;
-    barStyle?: any;
+    containerStyle?: ViewStyle;
+    centerStyle?: ViewStyle;
+    leftStyle?: ViewStyle;
+    rightStyle?: ViewStyle;
+    barStyle?: "dark-content" | "default" | "light-content";
 }) {
-    const insets = useSafeAreaInsets();
-    const frame = useSafeAreaFrame();
+
 
     const CustomStatusBar = ({
         barStyle,
@@ -44,9 +36,8 @@ export default function Header({
     }: {
         barStyle: "dark-content" | "default" | "light-content";
     }) => {
-        const { top } = useSafeAreaInsets();
         return (
-            <View style={{ height: StatusBar.currentHeight || top / 5 }}>
+            <View style={{}}>
                 <SafeAreaView style={{}}>
                     <StatusBar translucent {...props} barStyle={barStyle} />
                 </SafeAreaView>
@@ -60,19 +51,52 @@ export default function Header({
                 <View
                     style={[
                         {
+                            display: 'flex',
                             flex: 1,
                             justifyContent: "center",
-                            alignItems: "center",
-                            alignSelf: "center",
-
+                            alignItems: 'center',
                         },
-                        leftStlye,
+                        leftStyle,
                     ]}
                 >
                     {headerLeft}
                 </View>
             );
         }
+        // Eğer headerLeft boşsa, sol boşluk bırak
+        return <View style={[{ flex: 1, }, leftStyle]} />;
+    }, []);
+    const renderTitle = useCallback(() => {
+        if (title) {
+            return (
+                <View
+                    style={[
+                        {
+                            display: 'flex',
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                        },
+                        centerStyle,
+                    ]}
+                >
+                    <Text
+                        style={{
+                            fontSize: 30,
+                            fontWeight: "600",
+                            letterSpacing: 2,
+                        }}
+                    >
+                        {title}
+                    </Text>
+                </View>
+            );
+        }
+
+        return <View style={[{ flex: 1, }, centerStyle]} />;
+
+        // Eğer title boşsa, sol köşede boş bırak
+        return <View style={{ flex: 1 }} />;
     }, []);
 
     const renderRightButton = useCallback(() => {
@@ -81,10 +105,11 @@ export default function Header({
                 <View
                     style={[
                         {
+                            display: 'flex',
                             flex: 1,
-                            alignItems: "center",
+
                             justifyContent: "center",
-                            alignSelf: "center",
+                            alignItems: "center",
                         },
                         rightStyle,
                     ]}
@@ -93,51 +118,32 @@ export default function Header({
                 </View>
             );
         }
+        return <View style={[{ flex: 1, }, rightStyle]} />;
     }, []);
 
     return (
-        <>
+        <View style={{
+            paddingVertical: p(10),
+            paddingHorizontal: p(10),
+        }}>
             <CustomStatusBar barStyle={barStyle} />
-            <SafeAreaView
+            <View
                 style={[
                     {
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginTop: m(5),
-                        marginBottom: m(15),
+                        display: 'flex',
+                        flexDirection: 'row',
                     },
                     containerStyle,
                 ]}
             >
                 {renderLeftButton()}
-                <View
-                    style={[
-                        { flex: 1, justifyContent: "center", alignItems: "center" },
-                        centerStyle,
-                    ]}
-                >
-                    <Text
-                        style={{
-                            fontSize: 30,
-                            fontWeight: "600",
-                            textAlign: "center",
-                            letterSpacing: 2,
-                        }}
-                    >
-                        {title}
-                    </Text>
-                </View>
+                {renderTitle()}
                 {renderRightButton()}
-            </SafeAreaView>
-        </>
+            </View>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    content: {
-        flexDirection: "row",
 
-        height: 50,
-    },
 });

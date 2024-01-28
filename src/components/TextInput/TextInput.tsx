@@ -4,13 +4,14 @@ import { TextInput as Input, TextInputProps } from "react-native-paper";
 import { w, h, m, p } from "../../utils";
 import { useTheme } from "react-native-paper";
 
-const TextInput: React.FC<{ rightIconName?: string } & TextInputProps> = ({
+const TextInput: React.FC<{ rightIconName?: string, onRightIconPressed?: any } & TextInputProps> = ({
     placeholder,
     label,
     value,
     secureTextEntry,
     onChangeText,
     rightIconName,
+    onRightIconPressed,
     ...props
 }) => {
     const theme = useTheme();
@@ -51,12 +52,16 @@ const TextInput: React.FC<{ rightIconName?: string } & TextInputProps> = ({
                 secureTextEntry ? (
                     <Input.Icon
                         style={{}}
-                        onPress={() => setIsSecure((prev) => !prev)}
+                        onPress={() => {
+                            setIsSecure((prev) => !prev);
+                            onRightIconPressed()
+                        }}
                         icon={isSecure ? "eye-off" : "eye"}
                     />
                 ) : (
                     <Input.Icon
                         icon={rightIconName}
+                        onPress={() => onRightIconPressed()}
                     />
                 )
             }

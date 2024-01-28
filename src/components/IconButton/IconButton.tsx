@@ -56,7 +56,7 @@ const App: React.FC<IconButtonProps> = ({
     size = 20,
     iconColor = "black",
     text,
-    IconStyle = {},
+    IconStyle,
     onPress,
     SvgIcon,
     borderRadius = 5,
@@ -69,9 +69,9 @@ const App: React.FC<IconButtonProps> = ({
 
     return (
         <Pressable
-            {...rest}
             onPress={onPress}
             style={[IconStyle, styles.container]}
+            {...rest}
         >
             {icon ? (
                 <Icon name={icon} size={size} color={iconColor} />
@@ -87,5 +87,6 @@ export default App;
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
+        alignItems: 'center',
     },
 });

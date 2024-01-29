@@ -1,6 +1,7 @@
 import {
     SafeAreaView,
     StatusBar,
+    StyleProp,
     StyleSheet,
     Text,
     View,
@@ -22,10 +23,10 @@ export default function Header({
     HeaderColor?: string;
     headerLeft?: ReactNode;
     headerRight?: ReactNode;
-    containerStyle?: ViewStyle;
-    centerStyle?: ViewStyle;
-    leftStyle?: ViewStyle;
-    rightStyle?: ViewStyle;
+    containerStyle?: StyleProp<ViewStyle>;
+    centerStyle?: StyleProp<ViewStyle>;
+    leftStyle?: StyleProp<ViewStyle>;
+    rightStyle?: StyleProp<ViewStyle>;
     barStyle?: "dark-content" | "default" | "light-content";
 }) {
 
@@ -123,8 +124,6 @@ export default function Header({
 
     return (
         <View style={{
-            paddingVertical: p(10),
-            paddingHorizontal: p(10),
         }}>
             <CustomStatusBar barStyle={barStyle} />
             <View
@@ -132,6 +131,7 @@ export default function Header({
                     {
                         display: 'flex',
                         flexDirection: 'row',
+                        paddingVertical: p(10),
                     },
                     containerStyle,
                 ]}

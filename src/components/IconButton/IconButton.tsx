@@ -13,6 +13,7 @@ import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useTheme } from "react-native-paper";
@@ -27,6 +28,7 @@ const ICON_LIBRARIES: IconLibrary = {
     AntDesign: () => AntDesign,
     MaterialIcons: () => MaterialIcons,
     EvilIcons: () => EvilIcons,
+    Ionicons: () => Ionicons,
 };
 
 export type IconButtonProps = PressableProps & {
@@ -36,6 +38,7 @@ export type IconButtonProps = PressableProps & {
     | "MaterialCommunityIcons"
     | "FontAwesome"
     | "AntDesign"
+    | "Ionicons"
     | "EvilIcons"
     | "MaterialIcons";
     variant?: "text" | "contained" | "outline";

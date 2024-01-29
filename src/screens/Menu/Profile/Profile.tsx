@@ -3,13 +3,23 @@ import {
     SafeAreaView,
     StyleSheet,
     Text,
+    KeyboardAvoidingView,
     View,
     Platform,
+    Linking,
+    ScrollView,
+    StatusBar,
 } from "react-native";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { ErrorMessage, Formik } from "formik";
 import { IconButton, TextInput } from "../../../components";
-import { m, p, w } from "../../../utils";
+import { h, m, p, w } from "../../../utils";
 import Button from "../../../components/Button";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import BottomSheet, {
@@ -17,18 +27,32 @@ import BottomSheet, {
     BottomSheetFlatList,
     BottomSheetTextInput,
 } from "@gorhom/bottom-sheet";
+import {
+    SafeAreaProvider,
+    useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import Entypo from "@expo/vector-icons/Entypo";
+
 import { Portal } from "@gorhom/portal";
 
 import PhoneInput from "react-native-international-phone-number";
 
-import * as Location from 'expo-location';
-
+import * as Location from "expo-location";
+import Header from "../../../components/Header";
 
 const isIos = Platform.OS === "ios" && true;
 
-export default function Profile() {
-    const bottomSheetRef = useRef<BottomSheet>(null);
+export default function Profile({ navigation }) {
+    const [userInfo, setUserInfo] = useState({
+        fullname: "Can Salman",
+        mail: "example@example.com",
+        birthday: "01/01/1991",
+        phone: "05559687812",
+        location: "Edirne,Turkey",
+    });
 
+    const bottomSheetRef = useRef<BottomSheet>(null);
+    const insets = useSafeAreaInsets();
     const [date, setDate] = useState(new Date(1598051730000));
     const [mode, setMode] = useState("date");
     const [show, setShow] = useState(false);
@@ -37,21 +61,18 @@ export default function Profile() {
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [inputValue, setInputValue] = useState("");
 
-
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
     const [status, requestPermission] = Location.useForegroundPermissions();
 
-    console.log("status", status)
-
     useEffect(() => {
         (async () => {
-            requestPermission()
+            requestPermission();
 
             let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+            if (status !== "granted") {
+                setErrorMsg("Permission to access location was denied");
                 return;
             }
 
@@ -60,15 +81,12 @@ export default function Profile() {
         })();
     }, []);
 
-    let text = 'Waiting..';
+    let text = "Waiting..";
     if (errorMsg) {
         text = errorMsg;
     } else if (location) {
         text = JSON.stringify(location);
     }
-
-
-
 
     function handleInputValue(phoneNumber) {
         setInputValue(phoneNumber);
@@ -105,24 +123,69 @@ export default function Profile() {
     const handleSheetClose = useCallback(() => {
         bottomSheetRef.current?.close();
     }, []);
+
     return (
-        <SafeAreaView>
-            <View>
-                <Formik
-                    initialValues={{ mail: "", password: "" }}
-                    // validationSchema={validationSchema}
-                    onSubmit={(val: any) => { }}
+        <View
+            style={{
+                flex: 1,
+                paddingTop: insets.top,
+                paddingBottom: insets.bottom,
+                paddingLeft: insets.left,
+                paddingRight: insets.right,
+            }}
+        >
+            <Header
+                headerLeft={
+                    <IconButton
+                        icon="settings"
+                        iconFamily="Feather"
+                        onPress={() => navigation.navigate("Settings")}
+                        size={20}
+                        iconColor="#fff"
+                        style={{}}
+                    />
+                }
+                containerStyle={{
+                    backgroundColor: "#5DB075",
+                }}
+            />
+            <ScrollView>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
-                    {({
-                        values,
-                        errors,
-                        touched,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting,
-                    }) => (
-                        <View>
+                    <View
+                        style={{
+                            backgroundColor: "#5DB075",
+                            flex: 1,
+                            position: "relative",
+                            height: h(120),
+                        }}
+                    ></View>
+                    <View>
+                        <View
+                            style={{
+                                position: "absolute",
+                                top: m(-90),
+                                height: h(130),
+                                width: w(150),
+                                borderRadius: 1000,
+                                backgroundColor: "#B8B8B8",
+                                alignSelf: "center",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderWidth: 6,
+                                borderColor: "white",
+                            }}
+                        >
+                            <Entypo
+                                name="user"
+                                size={h(90)}
+                                color={"#D7D7D7"}
+                                style={{ marginBottom: m(5) }}
+                            />
+                        </View>
+
+                        <View style={{ marginTop: m(100) }}>
                             <Text
                                 style={{
                                     color: "black",
@@ -136,11 +199,15 @@ export default function Profile() {
                             </Text>
                             <TextInput
                                 autoCapitalize="none"
-                                placeholder={"Email"}
-                                value={values.mail}
+                                placeholder={"fullname"}
+                                value={userInfo.fullname}
                                 secureTextEntry={false}
-                                onBlur={handleBlur("mail")}
-                                onChangeText={handleChange("mail")}
+                                onChangeText={(fullname) =>
+                                    setUserInfo((prevState) => ({
+                                        ...prevState,
+                                        fullname: fullname,
+                                    }))
+                                }
                             />
                             <Text
                                 style={{
@@ -150,10 +217,10 @@ export default function Profile() {
                                     fontSize: 16,
                                     marginLeft: m(10),
                                 }}
-                            >
-                                <ErrorMessage name="mail" />
-                            </Text>
+                            ></Text>
+                        </View>
 
+                        <View>
                             <Text
                                 style={{
                                     color: "black",
@@ -166,11 +233,15 @@ export default function Profile() {
                                 Email address
                             </Text>
                             <TextInput
-                                placeholder={"Password"}
-                                value={values.password}
-                                secureTextEntry={true}
-                                onBlur={handleBlur("password")}
-                                onChangeText={handleChange("password")}
+                                placeholder={"mail"}
+                                value={userInfo.mail}
+                                secureTextEntry={false}
+                                onChangeText={(mail) =>
+                                    setUserInfo((prevState) => ({
+                                        ...prevState,
+                                        fullname: mail,
+                                    }))
+                                }
                             />
                             <Text
                                 style={{
@@ -180,10 +251,10 @@ export default function Profile() {
                                     fontSize: 16,
                                     marginLeft: m(10),
                                 }}
-                            >
-                                <ErrorMessage name="password" />
-                            </Text>
+                            ></Text>
+                        </View>
 
+                        <View>
                             <Text
                                 style={{
                                     color: "black",
@@ -195,26 +266,35 @@ export default function Profile() {
                             >
                                 Date of birth
                             </Text>
-                            <TextInput
-                                placeholder={"Password"}
-                                value={values.password}
-                                secureTextEntry={false}
-                                onBlur={handleBlur("password")}
-                                onChangeText={handleChange("password")}
-                                rightIconName="calendar"
-                            />
-                            <Text
-                                style={{
-                                    color: "red",
-                                    alignSelf: "center",
-                                    minWidth: w(340),
-                                    fontSize: 16,
-                                    marginLeft: m(10),
-                                }}
-                            >
-                                <ErrorMessage name="password" />
-                            </Text>
+                            <Pressable onPress={() => handleSheetChanges()}>
+                                <TextInput
+                                    placeholder={"Date"}
+                                    value={date.toLocaleString()}
+                                    editable={false}
+                                    onPressIn={() => handleSheetChanges()}
+                                    secureTextEntry={false}
+                                    onChangeText={(date) =>
+                                        setUserInfo((prevState) => ({
+                                            ...prevState,
+                                            fullname: date,
+                                        }))
+                                    }
+                                    rightIconName="calendar"
+                                    onRightIconPressed={() => handleSheetChanges()}
+                                />
+                                <Text
+                                    style={{
+                                        color: "red",
+                                        alignSelf: "center",
+                                        minWidth: w(340),
+                                        fontSize: 16,
+                                        marginLeft: m(10),
+                                    }}
+                                ></Text>
+                            </Pressable>
+                        </View>
 
+                        <View>
                             <Text
                                 style={{
                                     color: "black",
@@ -231,6 +311,7 @@ export default function Profile() {
                                 value={inputValue}
                                 onChangePhoneNumber={handleInputValue}
                                 selectedCountry={selectedCountry}
+                                placeholder="Phone Number"
                                 customCaret={
                                     <IconButton
                                         icon="chevron-down"
@@ -289,20 +370,9 @@ export default function Profile() {
                                     fontSize: 16,
                                     marginLeft: m(10),
                                 }}
-                            >
-                                <ErrorMessage name="password" />
-                            </Text>
-                            <View style={{ marginTop: 10 }}>
-                                <Text>
-                                    Country:{" "}
-                                    {`${selectedCountry?.name?.en} (${selectedCountry?.cca2})`}
-                                </Text>
-                                <Text>
-                                    Phone Number:{" "}
-                                    {`${selectedCountry?.callingCode} ${inputValue}`}
-                                </Text>
-                            </View>
-
+                            ></Text>
+                        </View>
+                        <Pressable onPress={() => { }}>
                             <Text
                                 style={{
                                     color: "black",
@@ -315,11 +385,17 @@ export default function Profile() {
                                 Location
                             </Text>
                             <TextInput
-                                placeholder={"Password"}
-                                value={values.password}
+                                placeholder={"location"}
+                                value={userInfo.location}
+                                // onPressIn={()=>{console.log("adsfƒ")}}
                                 secureTextEntry={false}
-                                onBlur={handleBlur("password")}
-                                onChangeText={handleChange("password")}
+                                editable={false}
+                                onChangeText={(location) =>
+                                    setUserInfo((prevState) => ({
+                                        ...prevState,
+                                        location: location,
+                                    }))
+                                }
                             />
                             <Text
                                 style={{
@@ -330,71 +406,56 @@ export default function Profile() {
                                     marginLeft: m(10),
                                 }}
                             >
-                                <ErrorMessage name="password" />
+                                {/* <ErrorMessage name="location" /> */}
                             </Text>
+                        </Pressable>
 
-
-
-
-                            <Pressable onPress={() => { }}>
-
+                        {/* <Pressable onPress={() => {
+                                Linking.openSettings()
+                            }}>
                                 <Text >{text}</Text>
-
-                            </Pressable>
-
-
-
-
-                            <Button
-                                title={"Save"}
-                                onPress={() => handleSubmit()}
-                                containerStyle={{ marginTop: m(20) }}
-                            />
-                        </View>
-                    )}
-                </Formik>
-            </View>
-
-            <View style={{ marginTop: 50 }}>
-                <Button
-                    onPress={() => handleSheetChanges()}
-                    title="Show date picker!"
-                />
-                <Text>selected: {date.toLocaleString()}</Text>
-            </View>
-
-            {isIos ? (
-                <Portal>
-                    <BottomSheet
-                        ref={bottomSheetRef}
-                        index={-1}
-                        style={{ padding: p(20) }}
-                        backgroundStyle={{ padding: p(10) }}
-                        handleStyle={{}}
-                        enablePanDownToClose={true}
-                        snapPoints={snapPoints}
-                        backdropComponent={renderBackdrop}
-                    >
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={date}
-                            display="spinner"
-                            onChange={onChange}
+                            </Pressable> */}
+                        <Button
+                            title={"Save"}
+                            // onPress={() => handleSubmit()}
+                            containerStyle={{ marginTop: m(20),marginBottom:m(20) }}
                         />
-                        <Button title={"OK"} onPress={() => handleSheetClose()} />
-                    </BottomSheet>
-                </Portal>
-            ) : (
-                show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        display="spinner"
-                        onChange={onChange}
-                    />
-                )
-            )}
-        </SafeAreaView>
+                    </View>
+
+                    {isIos ? (
+                        <Portal>
+                            <BottomSheet
+                                ref={bottomSheetRef}
+                                index={-1}
+                                style={{ padding: p(20) }}
+                                backgroundStyle={{ padding: p(10) }}
+                                handleStyle={{}}
+                                enablePanDownToClose={true}
+                                snapPoints={snapPoints}
+                                backdropComponent={renderBackdrop}
+                            >
+                                <DateTimePicker
+                                    testID="dateTimePicker"
+                                    value={date}
+                                    display="spinner"
+                                    onChange={onChange}
+                                />
+                                <Button title={"OK"} onPress={() => handleSheetClose()} />
+                            </BottomSheet>
+                        </Portal>
+                    ) : (
+                        show && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                display="spinner"
+                                onChange={onChange}
+                            />
+                        )
+                    )}
+                </KeyboardAvoidingView>
+            </ScrollView>
+        </View>
     );
 }
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import Home from '../screens/Main/Home';
-import Profile from '../screens/Profile/Profile';
+import Profile from '../screens/Menu/Profile';
 import CustomBottomTab from '../components/BottomTab/CustomBottomTab';
 const Tab = createBottomTabNavigator();
 

@@ -54,7 +54,9 @@ const TextInput: React.FC<{ rightIconName?: string, onRightIconPressed?: any } &
                         style={{}}
                         onPress={() => {
                             setIsSecure((prev) => !prev);
-                            onRightIconPressed()
+                            if (onRightIconPressed) {
+                                onRightIconPressed();
+                            }
                         }}
                         icon={isSecure ? "eye-off" : "eye"}
                     />

@@ -17,7 +17,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Home() {
     const navigation = useNavigation();
     const [value, setValue] = React.useState<string>();
-    const [deneme, setDeneme] = React.useState<string>();
 
     const theme = useTheme();
 

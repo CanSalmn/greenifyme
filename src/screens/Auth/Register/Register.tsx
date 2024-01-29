@@ -52,9 +52,7 @@ export default function Register({ navigation }) {
                         onPress={() => navigation.navigate("Login")}
                         size={20}
                         iconColor="#BDBDBD"
-                        //             IconStyle?: StyleProp<ViewStyle>;
-                        //         onPress?: () => void;
-                        // backgroundColor?: string;
+                        
 
                         style={{}}
                     />

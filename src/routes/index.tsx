@@ -10,15 +10,21 @@ import Login from "../screens/Auth/Login";
 import Register from "../screens/Auth/Register";
 import OnBoarding from "../screens/OnBoarding";
 import ForgotPassword from "../screens/Auth/ForgotPassword";
-import Profile from "../screens/Profile/Profile";
+import Profile from "../screens/Menu/Profile";
+import Settings from "../screens/Menu/Settings";
+import EditPassword from "../screens/Menu/EditPassword";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
+    <SafeAreaProvider>
+
     <NavigationContainer >
-      <Stack.Navigator initialRouteName='Splash' screenOptions={{
+      <Stack.Navigator initialRouteName='DashBoard' screenOptions={{
         headerShown: false,
       }}>
         <Stack.Group navigationKey="SPLASH">
@@ -39,10 +45,14 @@ const RootNavigator = () => {
 
         <Stack.Group navigationKey="Profile">
           <Stack.Screen name={'Profile'} component={Profile} />
+          <Stack.Screen name={'Settings'} component={Settings} />
+          <Stack.Screen name={'EditPassword'} component={EditPassword} />
         </Stack.Group>
 
       </Stack.Navigator>
     </NavigationContainer>
+    </SafeAreaProvider>
+
   );
 };
 

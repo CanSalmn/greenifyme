@@ -1,9 +1,9 @@
 import * as React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Dimensions, ScrollView, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "react-native-paper";
-import { w, h, m, p } from "../../../utils";        
+import { w, h, m, p } from "../../../utils";
 
 import {
     TaskCard,
@@ -82,7 +82,7 @@ export default function Home() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView >
+            {/* <ScrollView >
                 <Text
                     style={{
                         color: theme.colors.onBackground,
@@ -98,61 +98,69 @@ export default function Home() {
                     Home
                 </Text>
 
-                <Text
-                    style={{
-                        color: "#5DB075",
-                        fontSize: 24,
-                        margin: m(10),
-                        fontWeight: "500",
-                    }}
-                >
-                    News
-                </Text>
-                <FlashList
-                    data={newsData}
-                    renderItem={renderNews}
-                    estimatedItemSize={200}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
+                <View style={{ height: h(100), width: Dimensions.get("screen").width }}>
+                    <Text
+                        style={{
+                            color: "#5DB075",
+                            fontSize: 24,
+                            margin: m(10),
+                            fontWeight: "500",
+                        }}
+                    >
+                        News
+                    </Text>
+                    <FlashList
+                        data={newsData}
+                        renderItem={renderNews}
+                        estimatedItemSize={200}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+
                 <BalanceCard containerStyle={{ alignSelf: "center", marginTop: m(25) }} />
 
-                <Text
-                    style={{
-                        color: "#5DB075",
-                        fontSize: 24,
-                        margin: m(20),
-                        fontWeight: "500",
-                    }}
-                >
-                    Daily Tasks
-                </Text>
-                <FlashList
-                    data={TaskData}
-                    renderItem={renderTask}
-                    estimatedItemSize={200}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
+                <View style={{ height: h(100), width: Dimensions.get("screen").width }}>
+                    <Text
+                        style={{
+                            color: "#5DB075",
+                            fontSize: 24,
+                            margin: m(20),
+                            fontWeight: "500",
+                        }}
+                    >
+                        Daily Tasks
+                    </Text>
+                    <FlashList
+                        data={TaskData}
+                        renderItem={renderTask}
+                        estimatedItemSize={200}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
 
-                <Text
-                    style={{
-                        color: "#5DB075",
-                        fontSize: 24,
-                        margin: m(20),
-                        fontWeight: "500",
-                    }}
-                >
-                    Recycleable Materials
-                </Text>
-                <FlashList
-                    data={MaterailData}
-                    renderItem={renderMaterial}
-                    estimatedItemSize={200}
-                    showsHorizontalScrollIndicator={false}
+                <View style={{ height: 'auto', width: Dimensions.get("screen").width }}>
 
-                />
-            </ScrollView>
+                    <Text
+                        style={{
+                            color: "#5DB075",
+                            fontSize: 24,
+                            margin: m(20),
+                            fontWeight: "500",
+                        }}
+                    >
+                        Recycleable Materials
+                    </Text>
+                    <FlashList
+                        data={MaterailData}
+                        renderItem={renderMaterial}
+                        estimatedItemSize={200}
+                        showsHorizontalScrollIndicator={false}
+
+                    />
+                </View>
+            </ScrollView> */}
         </SafeAreaView>
     );
 }

@@ -45,7 +45,7 @@ export type IconButtonProps = PressableProps & {
     size?: number;
     iconColor?: string;
     IconStyle?: StyleProp<ViewStyle>;
-    onPress?: () => void;
+    onPress?: () => void  ;
     backgroundColor?: string;
     text?: string;
     borderRadius?: number;

@@ -1,17 +1,19 @@
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import { StyleSheet, Text, View, ViewStyle, Button } from "react-native";
 import React from "react";
 import { w, h, m, p } from "../../../utils";
 import Image from "../../Image";
-import Button from "../../Button";
 import IconButton from "../../IconButton";
+import { useNavigation } from "@react-navigation/native";
 
 
 interface IBalanceCard {
-    containerStyle: ViewStyle;
+    containerStyle?: ViewStyle;
+    onPress?: any;
+    isTransaction: boolean;
 }
 
 
-const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
+const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle, onPress, isTransaction }) => {
     return (
         <View
             style={[{
@@ -49,19 +51,26 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
             >
                 10 TL
             </Text>
-            <IconButton
-                IconStyle={{
-                    position: 'absolute',
-                    top: 10,
-                    right: 10,
-                    opacity: 0.7,
+            {
+                !isTransaction && (
+                    <IconButton
+                        IconStyle={{
+                            position: 'absolute',
+                            top: 10,
+                            right: 10,
+                            opacity: 0.7,
 
-                }}
-                icon="history"
-                iconFamily="MaterialCommunityIcons"
-                onPress={() => console.log("first")}
-                size={35}
-            />
+                        }}
+                        icon="history"
+                        iconFamily="MaterialCommunityIcons"
+                        onPress={onPress}
+                        size={35}
+                    />
+                )
+            }
+            <View>
+
+            </View>
         </View>
     );
 };

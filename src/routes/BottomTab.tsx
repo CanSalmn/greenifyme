@@ -12,6 +12,8 @@ import { HomeTabIcon, MapTabIcon, EnvironmentTabIcon, ProfileTabIcon, ScanTabIco
 import { useNavigation } from '@react-navigation/native';
 import { IconButton } from '../components';
 import { h, w } from '../utils';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Profile from '../screens/Menu/Profile';
 
 
 
@@ -27,34 +29,42 @@ const AddScreen = () => {
 export default function BottomTab() {
     // const theme = useTheme() as unknown as Theme
     const navigation = useNavigation()
+    const insets = useSafeAreaInsets();
 
     return (
-        <Tab.Navigator initialRouteName='Home' screenOptions={{
-            lazy: true,
-            headerShown: false,
-            tabBarActiveTintColor: '#5DB075', // active icon color: ;
-            tabBarInactiveTintColor: "#504F5F", // inactive icon color: ;
-            tabBarShowLabel: true,
-            tabBarStyle: {
-                backgroundColor: "white", // TabBar background
-                zIndex: 2,
-            },
+        <Tab.Navigator initialRouteName='Home'
+            screenOptions={{
+                lazy: true,
+                headerShown: false,
+                tabBarActiveTintColor: '#5DB075', // active icon color: ;
+                tabBarInactiveTintColor: "#B4B1B1", // inactive icon color: ;
+                tabBarShowLabel: true,
+                // tabBarIconStyle: { paddingTop: 20 },
+                tabBarStyle: {
+                    backgroundColor: "white", // TabBar background
+                    zIndex: 2,
+                    height: 60 + insets.bottom,
+                },
+                tabBarLabelStyle: {},
 
 
-        }}
+
+            }}
         >
             <Tab.Screen name="Home" component={Home} options={{
                 tabBarLabel: "Home",
+
                 tabBarIcon: ({ color, size }) => (
-                    <HomeTabIcon color={color} fill={color} />
+                    <HomeTabIcon color={color}  />
                 ),
             }} />
             <Tab.Screen name="Report" component={Home} options={{
                 tabBarLabel: "Report",
                 tabBarIcon: ({ color, size }) => (
-                    <MapTabIcon color={color} fill={color} />
+                    <MapTabIcon color={color}  />
                 ),
-            }} />
+            }}
+            />
             <Tab.Screen name="Add" component={Home} options={{
                 tabBarLabel: " ",
                 tabBarIcon: ({ color, size }) => (
@@ -79,7 +89,6 @@ export default function BottomTab() {
 
                 )
             }}
-
             />
 
 
@@ -89,8 +98,8 @@ export default function BottomTab() {
                     <EnvironmentTabIcon color={color} fill={color} />
                 ),
             }} />
-            <Tab.Screen name="Wallet" component={Home} options={{
-                tabBarLabel: "Wallet",
+            <Tab.Screen name="Profile" component={Profile} options={{
+                tabBarLabel: "Profile",
                 tabBarIcon: ({ color, size }) => (
                     <ProfileTabIcon color={color} fill={color} />
                 ),

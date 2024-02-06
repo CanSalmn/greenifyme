@@ -14,6 +14,7 @@ import Profile from "../screens/Menu/Profile";
 import Settings from "../screens/Menu/Settings";
 import EditPassword from "../screens/Menu/EditPassword";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Transaction from "../screens/Main/Transaction";
 
 
 
@@ -24,7 +25,7 @@ const RootNavigator = () => {
     <SafeAreaProvider>
 
     <NavigationContainer >
-      <Stack.Navigator initialRouteName='DashBoard' screenOptions={{
+      <Stack.Navigator initialRouteName='Transaction' screenOptions={{
         headerShown: false,
       }}>
         <Stack.Group navigationKey="SPLASH">
@@ -41,6 +42,7 @@ const RootNavigator = () => {
 
         <Stack.Group navigationKey="MAIN">
           <Stack.Screen name={'DashBoard'} component={BottomTab} />
+          <Stack.Screen name={'Transaction'} component={Transaction} />
         </Stack.Group>
 
         <Stack.Group navigationKey="Profile">

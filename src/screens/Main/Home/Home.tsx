@@ -14,8 +14,7 @@ import {
 import { MaterailData, newsData, TaskData } from "../../../data";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { SafeAreaView } from "react-native-safe-area-context";
-export default function Home() {
-    const navigation = useNavigation();
+export default function Home({navigation}) {
     const [value, setValue] = React.useState<string>();
 
     const theme = useTheme();
@@ -76,13 +75,20 @@ export default function Home() {
             <MaterialsCard
                 ImageSource={item.ImageSource}
                 materialTitle={item.materialTitle}
+                amount={item.amount}
             />
         );
     };
 
+
+    const handleTransactionButton=()=>{
+        console.log("clicked")
+        navigation.navigate('Transaction');
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            {/* <ScrollView >
+            <ScrollView>
                 <Text
                     style={{
                         color: theme.colors.onBackground,
@@ -98,7 +104,9 @@ export default function Home() {
                     Home
                 </Text>
 
-                <View style={{ height: h(100), width: Dimensions.get("screen").width }}>
+                <View
+                    style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
+                >
                     <Text
                         style={{
                             color: "#5DB075",
@@ -118,9 +126,15 @@ export default function Home() {
                     />
                 </View>
 
-                <BalanceCard containerStyle={{ alignSelf: "center", marginTop: m(25) }} />
+                <BalanceCard
+                    containerStyle={{ alignSelf: "center", marginTop: m(25) }}
+                    onPress={handleTransactionButton}
+                    isTransaction={false}
+                />
 
-                <View style={{ height: h(100), width: Dimensions.get("screen").width }}>
+                <View
+                    style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
+                >
                     <Text
                         style={{
                             color: "#5DB075",
@@ -140,8 +154,9 @@ export default function Home() {
                     />
                 </View>
 
-                <View style={{ height: 'auto', width: Dimensions.get("screen").width }}>
-
+                <View
+                    style={{ minHeight: h(150), width: Dimensions.get("screen").width }}
+                >
                     <Text
                         style={{
                             color: "#5DB075",
@@ -155,12 +170,12 @@ export default function Home() {
                     <FlashList
                         data={MaterailData}
                         renderItem={renderMaterial}
+                        numColumns={2}
                         estimatedItemSize={200}
                         showsHorizontalScrollIndicator={false}
-
                     />
                 </View>
-            </ScrollView> */}
+            </ScrollView>
         </SafeAreaView>
     );
 }

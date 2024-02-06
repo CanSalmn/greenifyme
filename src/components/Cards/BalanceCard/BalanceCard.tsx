@@ -8,12 +8,13 @@ import { useNavigation } from "@react-navigation/native";
 
 interface IBalanceCard {
     containerStyle?: ViewStyle;
-    onPress?: any;
     isTransaction: boolean;
 }
 
 
-const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle, onPress, isTransaction }) => {
+const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle, isTransaction }) => {
+
+    const navigation = useNavigation();
     return (
         <View
             style={[{
@@ -63,7 +64,7 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle, onPress, isTransa
                         }}
                         icon="history"
                         iconFamily="MaterialCommunityIcons"
-                        onPress={onPress}
+                        onPress={()=> navigation.navigate('Transaction')}
                         size={35}
                     />
                 )

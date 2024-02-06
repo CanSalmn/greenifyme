@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { Dimensions, ScrollView, Text, View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "react-native-paper";
@@ -14,7 +14,22 @@ import {
 import { MaterailData, newsData, TaskData } from "../../../data";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { SafeAreaView } from "react-native-safe-area-context";
-export default function Home({navigation}) {
+import { DragDropButton } from "../../../components";
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withDecay,
+} from 'react-native-reanimated';
+import {
+    Gesture,
+    GestureDetector,
+    GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+import { DragDropIcon } from "../../../assets/svg";
+
+const SIZE = 80;
+
+export default function Home({ navigation }) {
     const [value, setValue] = React.useState<string>();
 
     const theme = useTheme();
@@ -81,14 +96,24 @@ export default function Home({navigation}) {
     };
 
 
-    const handleTransactionButton=()=>{
+    const handleTransactionButton = () => {
         console.log("clicked")
         navigation.navigate('Transaction');
     }
 
+    const handleDragDropButton=()=>{
+            navigation.navigate('Report')
+    }
+
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView>
+        <>
+            <DragDropButton  onPress={handleDragDropButton}/>
+            <ScrollView style={{
+                position: 'relative', flex: 1,
+                height: '100%',
+            }} >
+
                 <Text
                     style={{
                         color: theme.colors.onBackground,
@@ -175,7 +200,12 @@ export default function Home({navigation}) {
                         showsHorizontalScrollIndicator={false}
                     />
                 </View>
+
             </ScrollView>
-        </SafeAreaView>
+        </>
+
+
     );
 }
+const styles = StyleSheet.create({
+});

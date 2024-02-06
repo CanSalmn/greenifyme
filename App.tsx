@@ -14,15 +14,13 @@ export default function App() {
     const theme = colorScheme === 'dark' ? DarkTheme : LightTheme;
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureHandlerRootView style={{ flex: 1 }} >
             <PortalProvider>
                 <PaperProvider theme={theme}>
-
                     <RootNavigator />
                 </PaperProvider>
             </PortalProvider>
         </GestureHandlerRootView >
-
     );
 }
 

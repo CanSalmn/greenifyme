@@ -58,8 +58,8 @@ export default function BottomTab() {
                     <HomeTabIcon color={color}  />
                 ),
             }} />
-            <Tab.Screen name="Report" component={Home} options={{
-                tabBarLabel: "Report",
+            <Tab.Screen name="Map" component={Home} options={{
+                tabBarLabel: "Map",
                 tabBarIcon: ({ color, size }) => (
                     <MapTabIcon color={color}  />
                 ),
@@ -92,8 +92,8 @@ export default function BottomTab() {
             />
 
 
-            <Tab.Screen name="Transaction" component={Home} options={{
-                tabBarLabel: "Transaction",
+            <Tab.Screen name="cummunity" component={Home} options={{
+                tabBarLabel: "cummunity",
                 tabBarIcon: ({ color, size }) => (
                     <EnvironmentTabIcon color={color} fill={color} />
                 ),

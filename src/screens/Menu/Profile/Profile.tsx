@@ -28,7 +28,6 @@ import BottomSheet, {
     BottomSheetTextInput,
 } from "@gorhom/bottom-sheet";
 import {
-    SafeAreaProvider,
     useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import Entypo from "@expo/vector-icons/Entypo";

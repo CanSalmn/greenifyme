@@ -14,7 +14,7 @@ import {
 import { MaterailData, newsData, TaskData } from "../../../data";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { DragDropButton, Header } from "../../../components";
+import { DragDropButton, Header, IconButton } from "../../../components";
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
@@ -114,7 +114,7 @@ export default function Home({ navigation }) {
                     height: "100%",
                 }}
             >
-                <Header title="Home"/>
+                <Header title="Home" />
 
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
@@ -140,23 +140,31 @@ export default function Home({ navigation }) {
 
                 <BalanceCard
                     containerStyle={{ alignSelf: "center", marginTop: m(25) }}
-                    onPress={handleTransactionButton}
-                    isTransaction={false}
+                // onPress={handleTransactionButton}
+                // isTransaction={false}
                 />
 
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
                 >
-                    <Text
-                        style={{
-                            color: "#5DB075",
-                            fontSize: 24,
-                            margin: m(20),
-                            fontWeight: "500",
-                        }}
-                    >
-                        Daily Tasks
-                    </Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+
+                        <Text
+                            style={{
+                                color: "#5DB075",
+                                fontSize: 24,
+                                margin: m(20),
+                                fontWeight: "500",
+                            }}
+                        >
+                            Daily Tasks
+                        </Text>
+                        <IconButton icon='plussquareo' iconFamily='AntDesign' size={30} iconColor={'#5DB075'} onPress={() => navigation.navigate('DailyTask')} />
+                    </View>
+
                     <FlashList
                         data={TaskData}
                         renderItem={renderTask}

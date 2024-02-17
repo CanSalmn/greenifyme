@@ -72,26 +72,7 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
                         10 TL
                     </Text>
                 </View>
-
-                <Pressable
-                    onPress={() => navigation.navigate('Transaction' as never)}
-                    style={{
-                        position: "absolute",
-                        bottom: 0,
-                        right: 20,
-                    }}
-                >
-                    <Text
-                        style={{
-                            color: "lightblue",
-                        }}
-                    >
-                        {" "}
-                        Show All
-                    </Text>
-                </Pressable>
             </View>
-
             <View style={{}}>
                 <TransactionCard
                     SvgIcon={DragDropIcon}
@@ -115,6 +96,23 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
                     isExpense={true}
                 />
             </View>
+            <Pressable
+                onPress={() => navigation.navigate("Transaction" as never)}
+                style={{
+                    position: "absolute",
+                    bottom: 5,
+                    right: 10,
+                }}
+            >
+                <Text
+                    style={{
+                        color: "lightblue",
+                    }}
+                >
+                    {" "}
+                    Show All
+                </Text>
+            </Pressable>
         </View>
     );
 };

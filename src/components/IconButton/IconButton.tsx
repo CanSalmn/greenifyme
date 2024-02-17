@@ -14,6 +14,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useTheme } from "react-native-paper";
@@ -29,6 +30,7 @@ const ICON_LIBRARIES: IconLibrary = {
     MaterialIcons: () => MaterialIcons,
     EvilIcons: () => EvilIcons,
     Ionicons: () => Ionicons,
+    Fontisto: () => Fontisto,
 };
 
 export type IconButtonProps = PressableProps & {
@@ -40,6 +42,7 @@ export type IconButtonProps = PressableProps & {
     | "AntDesign"
     | "Ionicons"
     | "EvilIcons"
+    | "Fontisto"
     | "MaterialIcons";
     variant?: "text" | "contained" | "outline";
     size?: number;

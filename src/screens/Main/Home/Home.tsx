@@ -14,17 +14,17 @@ import {
 import { MaterailData, newsData, TaskData } from "../../../data";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { DragDropButton } from "../../../components";
+import { DragDropButton, Header } from "../../../components";
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withDecay,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 import {
     Gesture,
     GestureDetector,
     GestureHandlerRootView,
-} from 'react-native-gesture-handler';
+} from "react-native-gesture-handler";
 import { DragDropIcon } from "../../../assets/svg";
 
 const SIZE = 80;
@@ -95,39 +95,26 @@ export default function Home({ navigation }) {
         );
     };
 
-
     const handleTransactionButton = () => {
-        console.log("clicked")
-        navigation.navigate('Transaction');
-    }
+        console.log("clicked");
+        navigation.navigate("Transaction");
+    };
 
-    const handleDragDropButton=()=>{
-            navigation.navigate('Report')
-    }
-
+    const handleDragDropButton = () => {
+        navigation.navigate("Report");
+    };
 
     return (
         <>
-            <DragDropButton  onPress={handleDragDropButton}/>
-            <ScrollView style={{
-                position: 'relative', flex: 1,
-                height: '100%',
-            }} >
-
-                <Text
-                    style={{
-                        color: theme.colors.onBackground,
-                        fontSize: 25,
-                        lineHeight: 30,
-                        letterSpacing: -1,
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        padding: p(15),
-                    }}
-                >
-                    {" "}
-                    Home
-                </Text>
+            <DragDropButton onPress={handleDragDropButton} />
+            <ScrollView
+                style={{
+                    position: "relative",
+                    flex: 1,
+                    height: "100%",
+                }}
+            >
+                <Header title="Home"/>
 
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
@@ -200,12 +187,8 @@ export default function Home({ navigation }) {
                         showsHorizontalScrollIndicator={false}
                     />
                 </View>
-
             </ScrollView>
         </>
-
-
     );
 }
-const styles = StyleSheet.create({
-});
+const styles = StyleSheet.create({});

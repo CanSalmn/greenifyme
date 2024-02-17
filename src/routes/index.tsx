@@ -19,6 +19,7 @@ import Transaction from "../screens/Main/Transaction";
 
 
 
+
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
@@ -26,7 +27,7 @@ const RootNavigator = () => {
     <SafeAreaProvider>
 
       <NavigationContainer >
-        <Stack.Navigator initialRouteName='DashBoard' screenOptions={{
+        <Stack.Navigator initialRouteName='SPLASH' screenOptions={{
           headerShown: false,
         }}>
           <Stack.Group navigationKey="SPLASH">

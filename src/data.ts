@@ -42,7 +42,7 @@ export const MaterailData = [
     {
         materialTitle: "Paper",
         ImageSource: require("../assets/images/Home/Paper.png"),
-        amount:"5 pcs.",
+        amount:"67 pcs.",
 
     },
     {
@@ -54,7 +54,7 @@ export const MaterailData = [
     {
         materialTitle: "Plastic",
         ImageSource: require("../assets/images/Home/Plastic.png"),
-        amount:"5 pcs.",
+        amount:"4 pcs.",
 
     },
     {
@@ -66,7 +66,7 @@ export const MaterailData = [
     {
         materialTitle: "Organic",
         ImageSource: require("../assets/images/Home/Organic.png"),
-        amount:"5 pcs.",
+        amount:"23 pcs.",
 
     },
     {

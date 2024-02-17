@@ -14,6 +14,9 @@ import { IconButton } from '../components';
 import { h, w } from '../utils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Profile from '../screens/Menu/Profile';
+import Map from "../screens/Main/Map";
+import Community from "../screens/Main/Community";
+import Scanner from "../screens/Main/Scanner";
 
 
 
@@ -55,20 +58,21 @@ export default function BottomTab() {
                 tabBarLabel: "Home",
 
                 tabBarIcon: ({ color, size }) => (
-                    <HomeTabIcon color={color}  />
+                    <HomeTabIcon color={color} />
                 ),
             }} />
-            <Tab.Screen name="Map" component={Home} options={{
+            <Tab.Screen name="Map" component={Map} options={{
                 tabBarLabel: "Map",
                 tabBarIcon: ({ color, size }) => (
-                    <MapTabIcon color={color}  />
+                    <MapTabIcon color={color} />
                 ),
             }}
             />
-            <Tab.Screen name="Add" component={Home} options={{
+            <Tab.Screen name="Scanner" component={Scanner} options={{
                 tabBarLabel: " ",
                 tabBarIcon: ({ color, size }) => (
-                    <TouchableHighlight
+                    <Pressable
+                        onPress={() => navigation.navigate('Scanner'as never)}
                         style={{
                             top: -22.5,
                             justifyContent: 'center',
@@ -82,17 +86,16 @@ export default function BottomTab() {
                             borderColor: '#8FC5A5',
 
                         }}
-                        underlayColor="#2882D8"
                     >
                         <ScanTabIcon color={'white'} fill={color} />
-                    </TouchableHighlight>
+                    </Pressable>
 
                 )
             }}
             />
 
 
-            <Tab.Screen name="cummunity" component={Home} options={{
+            <Tab.Screen name="cummunity" component={Community} options={{
                 tabBarLabel: "cummunity",
                 tabBarIcon: ({ color, size }) => (
                     <EnvironmentTabIcon color={color} fill={color} />

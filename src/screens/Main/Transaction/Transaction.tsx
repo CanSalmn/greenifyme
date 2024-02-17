@@ -29,9 +29,11 @@ export default function Transaction() {
                     />
                 }
             />
-            <BalanceCard
-            isTransaction={true}
-            />
+
+
+
+            
+
         </View>
     )
 }

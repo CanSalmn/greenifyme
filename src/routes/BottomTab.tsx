@@ -95,7 +95,7 @@ export default function BottomTab() {
             />
 
 
-            <Tab.Screen name="cummunity" component={Community} options={{
+            <Tab.Screen name="Community" component={Community} options={{
                 tabBarLabel: "cummunity",
                 tabBarIcon: ({ color, size }) => (
                     <EnvironmentTabIcon color={color} fill={color} />

@@ -98,18 +98,22 @@ export default function DailyTask() {
                     alignItems: "center",
                 }}
             >
-                <TextInput
-                    editable={false}
-                    placeholder="Task Category"
-                    rightIconName="arrow-down-drop-circle-outline"
-                    onRightIconPressed={() => {
-                        console.log("first");
-                    }}
-                    onPressIn={() => {
+                <Pressable
+                    onPress={() => {
                         setCategorySelect(true);
                         handleSheetChanges();
+                        console.log("clikced")
                     }}
-                />
+                >
+                    <TextInput
+                        editable={false}
+                        placeholder="Task Category"
+                        rightIconName="arrow-down-drop-circle-outline"
+                        onRightIconPressed={() => {
+                            console.log("first");
+                        }}
+                    />
+                </Pressable>
                 <View>
                     <Text
                         style={{
@@ -184,164 +188,166 @@ export default function DailyTask() {
                     <Button title={"CREATE"} containerStyle={{ marginTop: m(15) }} onPress={() => navigation.navigate('DashBoard' as never)} />
                 </View>
             </View>
-            {isIos || categorySelect ? (
-                <Portal>
-                    <BottomSheet
-                        ref={bottomSheetRef}
-                        index={-1}
-                        style={{ padding: p(20) }}
-                        backgroundStyle={{
-                            padding: p(10),
-                            backgroundColor: categorySelect && "#F6F6F6",
-                        }}
-                        handleStyle={{}}
-                        enablePanDownToClose={true}
-                        snapPoints={snapPoints}
-                        backdropComponent={renderBackdrop}
-                    >
-                        {categorySelect ? (
-                            <View
-                                style={{
-                                    flex: 1,
-                                    alignItems: "center",
-                                }}
-                            >
-                                <Pressable
+            {isIos || categorySelect ?
+                (
+                    <Portal>
+                        <BottomSheet
+                            ref={bottomSheetRef}
+                            index={-1}
+                            style={{ padding: p(20) }}
+                            backgroundStyle={{
+                                padding: p(10),
+                                backgroundColor: categorySelect && "#F6F6F6",
+                            }}
+                            handleStyle={{}}
+                            enablePanDownToClose={true}
+                            snapPoints={snapPoints}
+                            backdropComponent={renderBackdrop}
+                        >
+                            {categorySelect ? (
+                                <View
                                     style={{
-                                        flexDirection: "row",
-                                        height: h(40),
-                                        width: w(340),
+                                        flex: 1,
                                         alignItems: "center",
-                                        backgroundColor: "white",
-                                        borderRadius: 15,
-                                        padding: p(10),
-                                        margin: m(20),
-                                    }}
-                                    onPress={() => {
-                                        setTask((prev) => ({
-                                            ...prev,
-                                            category: 0,
-                                        }));
-                                        handleSheetClose();
                                     }}
                                 >
-                                    <View
+                                    <Pressable
                                         style={{
-                                            width: w(25),
-                                            height: h(20),
-                                            backgroundColor: "#629978",
-                                            borderRadius: 50,
+                                            flexDirection: "row",
+                                            height: h(40),
+                                            width: w(340),
+                                            alignItems: "center",
+                                            backgroundColor: "white",
+                                            borderRadius: 15,
+                                            padding: p(10),
+                                            margin: m(20),
                                         }}
-                                    ></View>
-                                    <Text
-                                        style={{
-                                            fontSize: 25,
-                                            fontWeight: "400",
-                                            marginLeft: m(15),
-                                        }}
-                                    >
-                                        Completed
-                                    </Text>
-                                </Pressable>
-                                <Pressable
-                                    style={{
-                                        flexDirection: "row",
-                                        height: h(40),
-                                        width: w(340),
-                                        alignItems: "center",
-                                        backgroundColor: "white",
-                                        borderRadius: 15,
-                                        padding: p(10),
-                                        marginBottom: m(20),
-                                    }}
-                                    onPress={() => {
-                                        setTask((prev) => ({
-                                            ...prev,
-                                            category: 1,
-                                        }));
-                                        handleSheetClose();
-                                    }}
-                                >
-                                    <View
-                                        style={{
-                                            width: w(25),
-                                            height: h(20),
-                                            backgroundColor: "#E0EB65",
-                                            borderRadius: 50,
-                                        }}
-                                    ></View>
-                                    <Text
-                                        style={{
-                                            fontSize: 25,
-                                            fontWeight: "400",
-                                            marginLeft: m(15),
+                                        onPress={() => {
+                                            setTask((prev) => ({
+                                                ...prev,
+                                                category: 0,
+                                            }));
+                                            handleSheetClose();
                                         }}
                                     >
-                                        Continues
-                                    </Text>
-                                </Pressable>
-                                <Pressable
-                                    style={{
-                                        flexDirection: "row",
-                                        height: h(40),
-                                        width: w(340),
-                                        alignItems: "center",
-                                        backgroundColor: "white",
-                                        borderRadius: 15,
-                                        padding: p(10),
-                                    }}
-                                    onPress={() => {
-                                        setTask((prev) => ({
-                                            ...prev,
-                                            category: 2,
-                                        }));
-                                        handleSheetClose();
-                                    }}
-                                >
-                                    <View
+                                        <View
+                                            style={{
+                                                width: w(25),
+                                                height: h(20),
+                                                backgroundColor: "#629978",
+                                                borderRadius: 50,
+                                            }}
+                                        ></View>
+                                        <Text
+                                            style={{
+                                                fontSize: 25,
+                                                fontWeight: "400",
+                                                marginLeft: m(15),
+                                            }}
+                                        >
+                                            Completed
+                                        </Text>
+                                    </Pressable>
+                                    <Pressable
                                         style={{
-                                            width: w(25),
-                                            height: h(20),
-                                            backgroundColor: "#F76436",
-                                            borderRadius: 50,
+                                            flexDirection: "row",
+                                            height: h(40),
+                                            width: w(340),
+                                            alignItems: "center",
+                                            backgroundColor: "white",
+                                            borderRadius: 15,
+                                            padding: p(10),
+                                            marginBottom: m(20),
                                         }}
-                                    ></View>
-                                    <Text
-                                        style={{
-                                            fontSize: 25,
-                                            fontWeight: "400",
-                                            marginLeft: m(15),
+                                        onPress={() => {
+                                            setTask((prev) => ({
+                                                ...prev,
+                                                category: 1,
+                                            }));
+                                            handleSheetClose();
                                         }}
                                     >
-                                        Canceled
-                                    </Text>
-                                </Pressable>
-                            </View>
-                        ) : (
-                            <>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={isSelectEndDate ? task.endDate : task.startDate}
-                                    mode="date"
-                                    display="spinner"
-                                    onChange={onChange}
-                                />
-                                <Button title={"OK"} onPress={() => handleSheetClose()} />
-                            </>
-                        )}
-                    </BottomSheet>
-                </Portal>
-            ) : (
-                show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={isSelectEndDate ? task.endDate : task.startDate}
-                        display="spinner"
-                        mode="date"
-                        onChange={onChange}
-                    />
+                                        <View
+                                            style={{
+                                                width: w(25),
+                                                height: h(20),
+                                                backgroundColor: "#E0EB65",
+                                                borderRadius: 50,
+                                            }}
+                                        ></View>
+                                        <Text
+                                            style={{
+                                                fontSize: 25,
+                                                fontWeight: "400",
+                                                marginLeft: m(15),
+                                            }}
+                                        >
+                                            Continues
+                                        </Text>
+                                    </Pressable>
+                                    <Pressable
+                                        style={{
+                                            flexDirection: "row",
+                                            height: h(40),
+                                            width: w(340),
+                                            alignItems: "center",
+                                            backgroundColor: "white",
+                                            borderRadius: 15,
+                                            padding: p(10),
+                                        }}
+                                        onPress={() => {
+                                            setTask((prev) => ({
+                                                ...prev,
+                                                category: 2,
+                                            }));
+                                            handleSheetClose();
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                width: w(25),
+                                                height: h(20),
+                                                backgroundColor: "#F76436",
+                                                borderRadius: 50,
+                                            }}
+                                        ></View>
+                                        <Text
+                                            style={{
+                                                fontSize: 25,
+                                                fontWeight: "400",
+                                                marginLeft: m(15),
+                                            }}
+                                        >
+                                            Canceled
+                                        </Text>
+                                    </Pressable>
+                                </View>
+                            ) : (
+                                <>
+                                    <DateTimePicker
+                                        testID="dateTimePicker"
+                                        value={isSelectEndDate ? task.endDate : task.startDate}
+                                        mode="date"
+                                        display="spinner"
+                                        onChange={onChange}
+                                    />
+                                    <Button title={"OK"} onPress={() => handleSheetClose()} />
+                                </>
+                            )}
+                        </BottomSheet>
+                    </Portal>
+                ) : (
+                    show && (
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={isSelectEndDate ? task.endDate : task.startDate}
+                            display="spinner"
+                            mode="date"
+                            onChange={onChange}
+                        />
+                    )
                 )
-            )}
+            }
         </View>
     );
 }

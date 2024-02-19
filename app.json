@@ -11,12 +11,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBZF7Yucd__KjQHqCod7HTeoXFzus0658I"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,8 +30,14 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
       ],
-      "package": "com.greefiyme.com"
+      "package": "com.greefiyme.com",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA2OlpvyGdduDBtcom_xPd_XpLVPLMOCKo"
+        }
+      }
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     },

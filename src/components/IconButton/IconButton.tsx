@@ -56,7 +56,7 @@ export type IconButtonProps = PressableProps & {
     width?: number;
     SvgIcon?: any;
 };
-const App: React.FC<IconButtonProps> = ({
+const IconButton: React.FC<IconButtonProps> = ({
     icon,
     iconFamily = "Feather",
     size = 20,
@@ -88,7 +88,7 @@ const App: React.FC<IconButtonProps> = ({
         </Pressable>
     );
 };
-export default App;
+export default IconButton;
 
 const styles = StyleSheet.create({
     container: {

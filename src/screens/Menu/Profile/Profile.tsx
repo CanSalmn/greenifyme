@@ -344,7 +344,6 @@ export default function Profile({ navigation }) {
                                     callingCode: {
                                         fontSize: 16,
                                         marginRight: m(5),
-                                        color: "#524B6B",
                                     },
                                     divider: {
                                         flex: 1,
@@ -354,7 +353,6 @@ export default function Profile({ navigation }) {
                                     },
                                     input: {
                                         flex: 4,
-                                        color: "#524B6B",
                                     },
                                 }}
                                 defaultCountry="TR"
@@ -417,7 +415,7 @@ export default function Profile({ navigation }) {
                         <Button
                             title={"Save"}
                             // onPress={() => handleSubmit()}
-                            containerStyle={{ marginTop: m(20),marginBottom:m(20) }}
+                            containerStyle={{ marginTop: m(20), marginBottom: m(20) }}
                         />
                     </View>
 

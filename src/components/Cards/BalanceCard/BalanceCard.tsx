@@ -1,17 +1,9 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    ViewStyle,
-    Button,
-    Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, ViewStyle, Pressable } from "react-native";
 import React from "react";
 import { w, h, m, p } from "../../../utils";
 import Image from "../../Image";
-import IconButton from "../../IconButton";
 import { useNavigation } from "@react-navigation/native";
-import { TransactionCard } from "../../../components/Cards";
+import TransactionCard from "../../../components/Cards/TransactionCard";
 import { DragDropIcon } from "../../../assets/svg";
 
 interface IBalanceCard {
@@ -74,27 +66,16 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
                 </View>
             </View>
             <View style={{}}>
-                <TransactionCard
-                    SvgIcon={DragDropIcon}
-                    title={"Food & Drinks"}
-                    date={"24/08/23"}
-                    price={20}
-                    isExpense={true}
-                />
-                <TransactionCard
-                    SvgIcon={DragDropIcon}
-                    title={"Freelancing Work"}
-                    date={"22/07/23"}
-                    price={22}
-                    isExpense={false}
-                />
-                <TransactionCard
-                    SvgIcon={DragDropIcon}
-                    title={"Shopping"}
-                    date={"22/07/23"}
-                    price={80}
-                    isExpense={true}
-                />
+                {lastTransactionList.map((transaction, index) => (
+                    <TransactionCard
+                        key={index}
+                        SvgIcon={transaction.svgIcon}
+                        title={transaction.title}
+                        date={transaction.date}
+                        price={transaction.price}
+                        isExpense={transaction.isExpense}
+                    />
+                ))}
             </View>
             <Pressable
                 onPress={() => navigation.navigate("Transaction" as never)}
@@ -120,3 +101,27 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
 export default BalanceCard;
 
 const styles = StyleSheet.create({});
+
+const lastTransactionList = [
+    {
+        svgIcon: DragDropIcon,
+        title: "Food & Drinks",
+        date: "24/08/23",
+        price: 20,
+        isExpense: true,
+    },
+    {
+        svgIcon: DragDropIcon,
+        title: "Freelancing Work",
+        date: "22/07/23",
+        price: 30,
+        isExpense: true,
+    },
+    {
+        svgIcon: DragDropIcon,
+        title: "Shopping",
+        date: "22/07/23",
+        price: 80,
+        isExpense: false,
+    },
+];

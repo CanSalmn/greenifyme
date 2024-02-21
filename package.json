@@ -7,6 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build-android": "eas build -p android --profile preview",
     "reset": "rm -rf node_modules && yarn cache clean && yarn &&  watchman watch-del-all && del %localappdata%Temphaste-map-* && del %localappdata%Tempmetro-cache && npx expo start --clear  "
   },
   "dependencies": {

@@ -1,6 +1,5 @@
 import {
     SafeAreaView,
-    StatusBar,
     StyleProp,
     StyleSheet,
     Text,
@@ -8,6 +7,7 @@ import {
     ViewStyle,
 } from "react-native";
 import React, { ReactNode, useCallback } from "react";
+import { StatusBar } from 'expo-status-bar';
 import { p } from "../../utils";
 export default function Header({
     headerLeft,
@@ -32,15 +32,15 @@ export default function Header({
 
 
     const CustomStatusBar = ({
-        barStyle,
+        barStyle = 'auto',
         ...props
     }: {
-        barStyle: "dark-content" | "default" | "light-content";
+        barStyle: 'auto' | 'inverted' | 'light' | 'dark';
     }) => {
         return (
             <View style={{}}>
                 <SafeAreaView style={{}}>
-                    <StatusBar translucent {...props} barStyle={barStyle} />
+                    <StatusBar style="dark" animated />
                 </SafeAreaView>
             </View>
         );
@@ -125,7 +125,7 @@ export default function Header({
     return (
         <View style={{
         }}>
-            <CustomStatusBar barStyle={barStyle} />
+            <CustomStatusBar barStyle={"auto"} />
             <View
                 style={[
                     {

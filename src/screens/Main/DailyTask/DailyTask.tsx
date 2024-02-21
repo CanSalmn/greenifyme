@@ -1,5 +1,11 @@
 import React, { useRef, useCallback, useState, useMemo } from "react";
-import { View, Text, Pressable, Platform, KeyboardAvoidingView } from "react-native";
+import {
+    View,
+    Text,
+    Pressable,
+    Platform,
+    KeyboardAvoidingView,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Header, IconButton, TextInput } from "../../../components";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +14,8 @@ import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import Button from "../../../components/Button";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useAppDispatch, useAppSelector } from "../../../redux/Task/hooks";
+import { setCategory, setDespription } from "../../../redux/Task/reducer";
 
 const isIos = Platform.OS === "ios" && true;
 
@@ -21,6 +29,8 @@ type DataType = {
 export default function DailyTask() {
     const insets = useSafeAreaInsets();
     const navigation = useNavigation();
+    const dispatch = useAppDispatch();
+    const { description } = useAppSelector((state) => state.dailyTask);
     const [show, setShow] = useState(false);
     const bottomSheetRef = useRef<BottomSheet>(null);
     const bottomSheetRefCategory = useRef<BottomSheet>(null);
@@ -96,14 +106,13 @@ export default function DailyTask() {
                 centerStyle={{ flex: 2 }}
             />
             <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{
                     flex: 1,
                     justifyContent: "center",
                     alignItems: "center",
                 }}
             >
-
                 <Pressable
                     onPress={() => {
                         handleSheetChangesSecond();
@@ -183,12 +192,13 @@ export default function DailyTask() {
                         multiline
                         placeholder="Type your task here..."
                         contentStyle={{ height: h(90) }}
-                        onChangeText={(item) =>
+                        onChangeText={(item) => {
                             setTask((prev) => ({
                                 ...prev,
                                 taskDescripton: item,
-                            }))
-                        }
+                            }));
+                            dispatch(setDespription(item));
+                        }}
                     />
                     <Button
                         title={"CREATE"}
@@ -273,6 +283,7 @@ export default function DailyTask() {
                                         category: category.value,
                                     }));
                                     handleSheetCloseSecond();
+                                    dispatch(setCategory(category.value));
                                 }}
                             >
                                 <View

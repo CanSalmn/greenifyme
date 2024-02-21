@@ -38,7 +38,7 @@ const MaterialsCard: React.FC<IMaterialsCard> = ({ ImageSource, materialTitle, a
             />
             <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 16, fontWeight: '300' }}>{materialTitle}</Text>
-                <Text style={{ marginTop: m(15), fontSize: 14, fontWeight: '300', color: '#00924ƒ5' }}>{amount} {unit}</Text>
+                <Text style={{ marginTop: m(15), fontSize: 14, fontWeight: '300', color: '#009245' }}>{amount} {unit}</Text>
                 {/* <View
                     style={{
                         flexDirection: "row",

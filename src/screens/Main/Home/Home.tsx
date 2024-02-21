@@ -27,12 +27,26 @@ import {
 } from "react-native-gesture-handler";
 import { DragDropIcon } from "../../../assets/svg";
 
+import { useAppDispatch, useAppSelector } from '../../../redux/Task/hooks';
+
+
+
 const SIZE = 80;
 
 export default function Home({ navigation }) {
+
+    const dispatch = useAppDispatch();
+    const { description, category } = useAppSelector(state => state.dailyTask);
+
     const [value, setValue] = React.useState<string>();
 
     const theme = useTheme();
+
+
+    console.log("description", description)
+    console.log("category", category)
+
+
 
     const BottomTabsData = [
         {
@@ -91,7 +105,7 @@ export default function Home({ navigation }) {
                 ImageSource={item.ImageSource}
                 materialTitle={item.materialTitle}
                 amount={item.amount}
-                unit= {item.unit}
+                unit={item.unit}
             />
         );
     };

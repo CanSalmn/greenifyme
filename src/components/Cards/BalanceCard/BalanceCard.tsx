@@ -61,7 +61,7 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
                             lineHeight: 36,
                         }}
                     >
-                        10 TL
+                        10 $
                     </Text>
                 </View>
             </View>

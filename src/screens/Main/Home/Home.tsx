@@ -91,6 +91,7 @@ export default function Home({ navigation }) {
                 ImageSource={item.ImageSource}
                 materialTitle={item.materialTitle}
                 amount={item.amount}
+                unit= {item.unit}
             />
         );
     };

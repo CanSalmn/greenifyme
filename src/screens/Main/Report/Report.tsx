@@ -1,5 +1,5 @@
 import { View, Text, Dimensions, FlatList } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Header, IconButton, Image } from "../../../components";
 import { useNavigation } from "@react-navigation/native";
@@ -14,16 +14,44 @@ export default function Report() {
     const [isReport, setIsReport] = useState<boolean>(false);
     const insets = useSafeAreaInsets();
     const navigation = useNavigation();
+    const [reportData, setReportData] = useState(MaterailData);
 
-    const renderReportCard = ({ item }) => {
+    const renderReportCard = useCallback(({ item }) => {
         return (
             <ReportCard
                 ImageSource={item.ImageSource}
                 materialTitle={item.materialTitle}
                 amount={item.amount}
+                unit={item.unit}
+                handleAmountUp={(item: string) => handleAmountUp(item)}
+                handleAmountDown={(item: string) => handleAmountDown(item)}
+
             />
         );
-    };
+    }, [reportData])
+
+    const handleAmountUp = (item: string) => {
+        setReportData(prevMaterials => {
+            return prevMaterials.map(material => {
+                if (material.materialTitle === item) {
+                    return { ...material, amount: material.amount + 1 };
+                }
+                return material;
+            });
+        });
+
+    }
+    const handleAmountDown = (item: string) => {
+        setReportData(prevMaterials => {
+            return prevMaterials.map(material => {
+                if (material.materialTitle === item) {
+                    return { ...material, amount: material.amount - 1 };
+                }
+                return material;
+            });
+        });
+
+    }
 
     const backgroundColorMain = isReport ? "white" : '#5DB075'
 
@@ -42,7 +70,7 @@ export default function Report() {
             {
                 isReport ? (
                     <View style={{ flex: 1, height: 200, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 30, color: '#5DB075', fontWeight: 'bold' }}>Report is successfully</Text>
+                        <Text style={{ fontSize: 30, color: '#5DB075', fontWeight: 'bold' }}>Report is Successful</Text>
                         <Image style={{ width: '100%', height: h(300) }} source={require('../../../../assets/images/SuccessMen.png')} />
                         <Button title={"Go to Home"} onPress={() => navigation.navigate('DashBoard' as never)} />
                     </View>
@@ -58,15 +86,12 @@ export default function Report() {
                                     size={30}
                                     iconColor="#524B6B"
                                     style={{}}
-
                                 />
                             }
                         />
-
                         <View
                             style={{ height: h(50), width: "100%", backgroundColor: "#5DB075" }}
                         />
-
                         <View
                             style={{
                                 flex: 1,
@@ -82,7 +107,7 @@ export default function Report() {
                                 <DragDropIcon width={200} height={200} />
                             </View>
                             <FlashList
-                                data={MaterailData}
+                                data={reportData}
                                 renderItem={renderReportCard}
                                 estimatedItemSize={200}
                                 numColumns={2}

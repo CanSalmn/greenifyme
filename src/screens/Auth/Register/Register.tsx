@@ -41,6 +41,10 @@ export default function Register({ navigation }) {
     const onPressButton = () => {
         console.log("header icon button pressed");
     };
+    const handleFormSubmit = () => {
+        navigation.navigate('DashBoard')
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, position: "relative" }}>
             <Header
@@ -59,7 +63,7 @@ export default function Register({ navigation }) {
                     validationSchema={validationSchema}
                     onSubmit={(val: any) => {
                         console.log("val", val);
-                        // handleFormSubmit(val);
+                        handleFormSubmit(val);
                     }}
                 >
                     {({

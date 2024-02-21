@@ -8,10 +8,11 @@ import Button from "../../Button";
 interface IMaterialsCard {
     ImageSource: string;
     materialTitle: string;
-    amount:string;
+    amount: string;
+    unit: string;
 }
 
-const MaterialsCard: React.FC<IMaterialsCard> = ({ ImageSource, materialTitle ,amount}) => {
+const MaterialsCard: React.FC<IMaterialsCard> = ({ ImageSource, materialTitle, amount, unit }) => {
     return (
         <View
             style={{
@@ -24,7 +25,7 @@ const MaterialsCard: React.FC<IMaterialsCard> = ({ ImageSource, materialTitle ,a
                 flexDirection: "row",
                 alignItems: "center",
                 marginHorizontal: m(15),
-                marginBottom:m(10),
+                marginBottom: m(10),
             }}
         >
             <Image
@@ -37,7 +38,7 @@ const MaterialsCard: React.FC<IMaterialsCard> = ({ ImageSource, materialTitle ,a
             />
             <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 16, fontWeight: '300' }}>{materialTitle}</Text>
-                <Text style={{ marginTop: m(15), fontSize: 14, fontWeight: '300', color:'#009245' }}>{amount}</Text>
+                <Text style={{ marginTop: m(15), fontSize: 14, fontWeight: '300', color: '#00924ƒ5' }}>{amount} {unit}</Text>
                 {/* <View
                     style={{
                         flexDirection: "row",

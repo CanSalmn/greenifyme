@@ -7,6 +7,10 @@ import Button from "../../Button";
 export default function ReportCard({
   ImageSource,
   amount,
+  handleAmountUp,
+  handleAmountDown,
+  materialTitle,
+  unit,
 }: any) {
   return (
     <View
@@ -57,6 +61,7 @@ export default function ReportCard({
             containerStyle={{ height: h(20), width: w(20) }}
             titleStyle={{ color: "black", fontSize: 25 }}
             title={"-"}
+            onPress={() => handleAmountDown(materialTitle)}
           />
           <View
             style={{
@@ -67,12 +72,14 @@ export default function ReportCard({
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 15, color: 'black' }}>{amount}</Text>
+            <Text style={{ fontSize: 15, color: 'black' }}>{amount} {unit}</Text>
           </View>
           <Button
             containerStyle={{ height: h(20), width: w(20) }}
             titleStyle={{ color: "black", fontSize: 25 }}
             title={"+"}
+            onPress={() => handleAmountUp(materialTitle)}
+
           />
         </View>
       </View>

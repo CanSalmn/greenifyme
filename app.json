@@ -14,15 +14,30 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBZF7Yucd__KjQHqCod7HTeoXFzus0658I"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "userInterfaceStyle": "automatic"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ],
+      "package": "com.greefiyme.com",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA2OlpvyGdduDBtcom_xPd_XpLVPLMOCKo"
+        }
       }
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     },
@@ -33,6 +48,11 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "030da6e1-efb8-4ea5-af47-7ca6eb27de59"
+      }
+    }
   }
 }

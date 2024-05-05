@@ -1,9 +1,9 @@
 import * as React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Dimensions, ScrollView, Text, View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "react-native-paper";
-import { w, h, m, p } from "../../../utils";        
+import { w, h, m, p } from "../../../utils";
 
 import {
     TaskCard,
@@ -14,12 +14,39 @@ import {
 import { MaterailData, newsData, TaskData } from "../../../data";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { SafeAreaView } from "react-native-safe-area-context";
-export default function Home() {
-    const navigation = useNavigation();
+import { DragDropButton, Header, IconButton } from "../../../components";
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withDecay,
+} from "react-native-reanimated";
+import {
+    Gesture,
+    GestureDetector,
+    GestureHandlerRootView,
+} from "react-native-gesture-handler";
+import { DragDropIcon } from "../../../assets/svg";
+
+import { useAppDispatch, useAppSelector } from '../../../redux/Task/hooks';
+
+
+
+const SIZE = 80;
+
+export default function Home({ navigation }) {
+
+    const dispatch = useAppDispatch();
+    const { description, category } = useAppSelector(state => state.dailyTask);
+
     const [value, setValue] = React.useState<string>();
-    const [deneme, setDeneme] = React.useState<string>();
 
     const theme = useTheme();
+
+
+    console.log("description", description)
+    console.log("category", category)
+
+
 
     const BottomTabsData = [
         {
@@ -77,83 +104,114 @@ export default function Home() {
             <MaterialsCard
                 ImageSource={item.ImageSource}
                 materialTitle={item.materialTitle}
+                amount={item.amount}
+                unit={item.unit}
             />
         );
     };
 
+    const handleTransactionButton = () => {
+        console.log("clicked");
+        navigation.navigate("Transaction");
+    };
+
+    const handleDragDropButton = () => {
+        navigation.navigate("Report");
+    };
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView >
-                <Text
-                    style={{
-                        color: theme.colors.onBackground,
-                        fontSize: 25,
-                        lineHeight: 30,
-                        letterSpacing: -1,
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        padding: p(15),
-                    }}
-                >
-                    {" "}
-                    Home
-                </Text>
+        <>
+            <DragDropButton onPress={handleDragDropButton} />
+            <ScrollView
+                style={{
+                    position: "relative",
+                    flex: 1,
+                    height: "100%",
+                }}
+            >
+                <Header title="Home" />
 
-                <Text
-                    style={{
-                        color: "#5DB075",
-                        fontSize: 24,
-                        margin: m(10),
-                        fontWeight: "500",
-                    }}
+                <View
+                    style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
                 >
-                    News
-                </Text>
-                <FlashList
-                    data={newsData}
-                    renderItem={renderNews}
-                    estimatedItemSize={200}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
-                <BalanceCard containerStyle={{ alignSelf: "center", marginTop: m(25) }} />
+                    <Text
+                        style={{
+                            color: "#5DB075",
+                            fontSize: 24,
+                            margin: m(10),
+                            fontWeight: "500",
+                        }}
+                    >
+                        News
+                    </Text>
+                    <FlashList
+                        data={newsData}
+                        renderItem={renderNews}
+                        estimatedItemSize={200}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
 
-                <Text
-                    style={{
-                        color: "#5DB075",
-                        fontSize: 24,
-                        margin: m(20),
-                        fontWeight: "500",
-                    }}
-                >
-                    Daily Tasks
-                </Text>
-                <FlashList
-                    data={TaskData}
-                    renderItem={renderTask}
-                    estimatedItemSize={200}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
+                <BalanceCard
+                    containerStyle={{ alignSelf: "center", marginTop: m(25) }}
+                // onPress={handleTransactionButton}
+                // isTransaction={false}
                 />
 
-                <Text
-                    style={{
-                        color: "#5DB075",
-                        fontSize: 24,
-                        margin: m(20),
-                        fontWeight: "500",
-                    }}
+                <View
+                    style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
                 >
-                    Recycleable Materials
-                </Text>
-                <FlashList
-                    data={MaterailData}
-                    renderItem={renderMaterial}
-                    estimatedItemSize={200}
-                    showsHorizontalScrollIndicator={false}
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
 
-                />
+                        <Text
+                            style={{
+                                color: "#5DB075",
+                                fontSize: 24,
+                                margin: m(20),
+                                fontWeight: "500",
+                            }}
+                        >
+                            Daily Tasks
+                        </Text>
+                        <IconButton icon='plussquareo' iconFamily='AntDesign' size={30} iconColor={'#5DB075'} onPress={() => navigation.navigate('DailyTask')} />
+                    </View>
+
+                    <FlashList
+                        data={TaskData}
+                        renderItem={renderTask}
+                        estimatedItemSize={200}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+
+                <View
+                    style={{ minHeight: h(150), width: Dimensions.get("screen").width }}
+                >
+                    <Text
+                        style={{
+                            color: "#5DB075",
+                            fontSize: 24,
+                            margin: m(20),
+                            fontWeight: "500",
+                        }}
+                    >
+                        Recycleable Materials
+                    </Text>
+                    <FlashList
+                        data={MaterailData}
+                        renderItem={renderMaterial}
+                        numColumns={2}
+                        estimatedItemSize={200}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
             </ScrollView>
-        </SafeAreaView>
+        </>
     );
 }
+const styles = StyleSheet.create({});

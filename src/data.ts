@@ -37,34 +37,51 @@ export const MaterailData = [
     {
         materialTitle: "Glass",
         ImageSource: require("../assets/images/Home/Glass.png"),
+        amount: 0,
+        unit: "kg",
+
     },
     {
         materialTitle: "Paper",
         ImageSource: require("../assets/images/Home/Paper.png"),
+        amount: 0,
+        unit: "kg",
     },
     {
         materialTitle: "Bataries",
         ImageSource: require("../assets/images/Home/Bataries.png"),
+        amount: 0,
+        unit: "pcs",
     },
     {
         materialTitle: "Plastic",
         ImageSource: require("../assets/images/Home/Plastic.png"),
+        amount: 0,
+        unit: "kg",
     },
     {
         materialTitle: "Metal",
         ImageSource: require("../assets/images/Home/Metal.png"),
+        amount: 0,
+        unit: "kg",
     },
     {
         materialTitle: "Organic",
         ImageSource: require("../assets/images/Home/Organic.png"),
+        amount: 0,
+        unit: "kg",
     },
     {
         materialTitle: "Oil",
         ImageSource: require("../assets/images/Home/Oil.png"),
+        amount: 0,
+        unit: "liter",
     },
     {
         materialTitle: "Medical Wastes",
         ImageSource: require("../assets/images/Home/MedicalWaste.png"),
+        amount: 0,
+        unit: "kg",
     },
 
 ];

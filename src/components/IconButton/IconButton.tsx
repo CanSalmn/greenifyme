@@ -13,6 +13,8 @@ import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useTheme } from "react-native-paper";
@@ -27,6 +29,8 @@ const ICON_LIBRARIES: IconLibrary = {
     AntDesign: () => AntDesign,
     MaterialIcons: () => MaterialIcons,
     EvilIcons: () => EvilIcons,
+    Ionicons: () => Ionicons,
+    Fontisto: () => Fontisto,
 };
 
 export type IconButtonProps = PressableProps & {
@@ -36,13 +40,15 @@ export type IconButtonProps = PressableProps & {
     | "MaterialCommunityIcons"
     | "FontAwesome"
     | "AntDesign"
+    | "Ionicons"
     | "EvilIcons"
+    | "Fontisto"
     | "MaterialIcons";
     variant?: "text" | "contained" | "outline";
     size?: number;
     iconColor?: string;
     IconStyle?: StyleProp<ViewStyle>;
-    onPress?: () => void;
+    onPress?: () => void  ;
     backgroundColor?: string;
     text?: string;
     borderRadius?: number;
@@ -50,13 +56,13 @@ export type IconButtonProps = PressableProps & {
     width?: number;
     SvgIcon?: any;
 };
-const App: React.FC<IconButtonProps> = ({
+const IconButton: React.FC<IconButtonProps> = ({
     icon,
     iconFamily = "Feather",
     size = 20,
     iconColor = "black",
     text,
-    IconStyle = {},
+    IconStyle,
     onPress,
     SvgIcon,
     borderRadius = 5,
@@ -69,9 +75,9 @@ const App: React.FC<IconButtonProps> = ({
 
     return (
         <Pressable
-            {...rest}
             onPress={onPress}
             style={[IconStyle, styles.container]}
+            {...rest}
         >
             {icon ? (
                 <Icon name={icon} size={size} color={iconColor} />
@@ -82,10 +88,11 @@ const App: React.FC<IconButtonProps> = ({
         </Pressable>
     );
 };
-export default App;
+export default IconButton;
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
+        alignItems: 'center',
     },
 });

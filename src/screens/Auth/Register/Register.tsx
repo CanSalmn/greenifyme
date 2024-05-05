@@ -41,29 +41,15 @@ export default function Register({ navigation }) {
     const onPressButton = () => {
         console.log("header icon button pressed");
     };
+    const handleFormSubmit = () => {
+        navigation.navigate('DashBoard')
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, position: "relative" }}>
             <Header
                 title={"Sign Up"}
-                headerLeft={
-                    <IconButton
-                        icon="close"
-                        iconFamily="EvilIcons"
-                        onPress={() => navigation.navigate("Login")}
-                        size={20}
-                        iconColor="#BDBDBD"
-                        //             IconStyle?: StyleProp<ViewStyle>;
-                        //         onPress?: () => void;
-                        // backgroundColor?: string;
-
-                        style={{}}
-                    />
-                }
-                headerRight={<Pressable onPress={()=> navigation.navigate("Login")}><Text style={{ color: "#5DB075",}}>Login</Text></Pressable>}
-                rightStyle={"  alignItems: 'flex-start', backgroundColor:'red"}
-                leftStlye={"justifyContent: 'flex-start' "}
             />
-
             <View
                 style={{
                     flex: 2,
@@ -77,7 +63,7 @@ export default function Register({ navigation }) {
                     validationSchema={validationSchema}
                     onSubmit={(val: any) => {
                         console.log("val", val);
-                        // handleFormSubmit(val);
+                        handleFormSubmit(val);
                     }}
                 >
                     {({
@@ -201,7 +187,7 @@ export default function Register({ navigation }) {
                         </View>
                     )}
                 </Formik>
-                <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+                <Pressable onPress={() => navigation.navigate("Login")}>
                     <Text
                         style={{
                             color: "#5DB075",
@@ -215,7 +201,7 @@ export default function Register({ navigation }) {
                             marginTop: m(10),
                         }}
                     >
-                        Forgot your password?
+                        Back to Login
                     </Text>
                 </Pressable>
             </View>

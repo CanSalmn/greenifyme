@@ -16,6 +16,7 @@ import { store } from "./src/redux/Task/store";
 import NetInfo, { useNetInfo } from "@react-native-community/netinfo";
 import { onlineManager } from "@tanstack/react-query";
 import { focusManager } from "@tanstack/react-query";
+import { ToastProvider } from 'react-native-toast-notifications'
 export default function App() {
     const colorScheme = useColorScheme();
     const theme = colorScheme === "dark" ? DarkTheme : LightTheme;
@@ -41,15 +42,19 @@ export default function App() {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <QueryClientProvider client={queryClient}>
-                <Provider store={store}>
-                    <PortalProvider>
-                        <PaperProvider theme={theme}>
-                            <RootNavigator />
-                        </PaperProvider>
-                    </PortalProvider>
-                </Provider>
-            </QueryClientProvider>
-        </GestureHandlerRootView>
+            <ToastProvider
+                textStyle={{ fontSize: 16 }}
+            >
+                <QueryClientProvider client={queryClient}>
+                    <Provider store={store}>
+                        <PortalProvider>
+                            <PaperProvider theme={theme}>
+                                <RootNavigator />
+                            </PaperProvider>
+                        </PortalProvider>
+                    </Provider>
+                </QueryClientProvider>
+            </ToastProvider>
+        </GestureHandlerRootView >
     );
 }

@@ -1,12 +1,12 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, SafeAreaView, Text, View } from "react-native";
 import React, { useState } from "react";
 import Header from "../../../components/Header";
 import { IconButton, TextInput, Image } from "../../../components";
 import { h, m, w } from "../../../utils";
-import { Checkbox, Icon } from "react-native-paper";
 import Button from "../../../components/Button";
-import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useRegister } from "../../../service/Auth/Register/RegisterMutation";
 
 interface Values {
     name: string;
@@ -37,19 +37,14 @@ const validationSchema = Yup.object().shape({
 
 export default function Register({ navigation }) {
     const [isCheck, setIsCheck] = useState(false);
-
-    const onPressButton = () => {
-        console.log("header icon button pressed");
+    const useRegisterMutation = useRegister();
+    const handleFormSubmit = (val: any) => {
+        useRegisterMutation.mutate(val);
     };
-    const handleFormSubmit = () => {
-        navigation.navigate('DashBoard')
-    }
 
     return (
         <SafeAreaView style={{ flex: 1, position: "relative" }}>
-            <Header
-                title={"Sign Up"}
-            />
+            <Header title={"Sign Up"} />
             <View
                 style={{
                     flex: 2,
@@ -62,7 +57,6 @@ export default function Register({ navigation }) {
                     initialValues={{ name: "", mail: "", password: "", repassword: "" }}
                     validationSchema={validationSchema}
                     onSubmit={(val: any) => {
-                        console.log("val", val);
                         handleFormSubmit(val);
                     }}
                 >

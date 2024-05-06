@@ -1,23 +1,14 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import React, { useState } from "react";
 import Header from "../../../components/Header";
 import { IconButton, TextInput, Image } from "../../../components";
 import { h, m, w } from "../../../utils";
-import { Checkbox } from "react-native-paper";
 import Button from "../../../components/Button";
-import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import {
-  useSafeAreaFrame,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLogin } from "../../../service/Auth/Login/LoginMutation";
 
-interface Values {
-  name: string;
-  mail: string;
-  password: string;
-  repassword: string;
-}
 const getCharacterValidationError = (str: string) => {
   return `Your password must have at least 1 ${str} character`;
 };
@@ -34,43 +25,40 @@ const validationSchema = Yup.object().shape({
     .matches(/[A-Z]/, getCharacterValidationError("uppercase"))
     .required("Required"),
 });
-
 export default function Login({ navigation }) {
   const [isCheck, setIsCheck] = useState(false);
-
   const insets = useSafeAreaInsets();
 
-  const onPressButton = () => {
-    console.log("header icon button pressed");
+  const useLoginMutation = useLogin();
+
+  const handleLogin = (val: any) => {
+    useLoginMutation.mutate(val);
   };
 
-  const onPressLoginButton = ({ mail, password }) => {
-    // if (
-    //   mail === userLoginData.usermail &&
-    //   password === userLoginData.password
-    // ) {
-    //   navigation.navigate("DashBoard");
-    // } else {
-    //   return;
-    // }
-    navigation.navigate("DashBoard");
-  };
   return (
-    <View style={{
-      flex: 1, paddingTop: insets.top,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-      paddingBottom: insets.bottom,
-    }}>
-      <Header
-        title={"Log In"}
-      />
-      <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+        paddingBottom: insets.bottom,
+      }}
+    >
+      <Header title={"Log In"} />
+      <View
+        style={{
+          flex: 2,
+          justifyContent: "center",
+          alignItems: "center",
+          alignSelf: "center",
+        }}
+      >
         <Formik
           initialValues={{ mail: "", password: "" }}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={(val: any) => {
-            onPressLoginButton(val);
+            handleLogin(val);
           }}
         >
           {({
@@ -133,7 +121,9 @@ export default function Login({ navigation }) {
               >
                 <IconButton
                   icon={
-                    isCheck ? "checkbox-blank-outline" : "checkbox-marked-outline"
+                    isCheck
+                      ? "checkbox-blank-outline"
+                      : "checkbox-marked-outline"
                   }
                   iconFamily="MaterialCommunityIcons"
                   size={20}
@@ -193,24 +183,19 @@ export default function Login({ navigation }) {
             Sign Up
           </Text>
         </Pressable>
-
       </View>
 
-      <View style={{ justifyContent: 'flex-end', flex: 1, }}>
+      <View style={{ justifyContent: "flex-end", flex: 1 }}>
         <Image
           style={{
             height: h(213),
             width: w(340),
-            alignSelf: 'center',
+            alignSelf: "center",
           }}
           source={require("../../../../assets/images/recyclerPeople2.png")}
         />
       </View>
-
-
-
     </View>
-
   );
 }
 

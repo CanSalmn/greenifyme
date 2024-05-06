@@ -43,11 +43,6 @@ export default function Home({ navigation }) {
     const theme = useTheme();
 
 
-    console.log("description", description)
-    console.log("category", category)
-
-
-
     const BottomTabsData = [
         {
             id: "currency-tab",

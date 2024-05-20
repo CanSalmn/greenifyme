@@ -28,19 +28,40 @@ import {
 import { DragDropIcon } from "../../../assets/svg";
 
 import { useAppDispatch, useAppSelector } from '../../../redux/Task/hooks';
+import { useGetBalance } from "../../../service/Balance/BalanceMutation";
+import { useQuery } from "@tanstack/react-query";
+import { balance } from "../../../service/Balance";
 
 
 
 const SIZE = 80;
 
 export default function Home({ navigation }) {
-
+    const theme = useTheme();
     const dispatch = useAppDispatch();
+
     const { description, category } = useAppSelector(state => state.dailyTask);
 
     const [value, setValue] = React.useState<string>();
 
-    const theme = useTheme();
+    const { isPending, isError, data: balanceData, error } = useQuery({
+        queryKey: ["balance",],
+        queryFn: () => balance(),
+
+    });
+
+
+
+    if (isPending) {
+        return <Text>Loading...</Text>
+    }
+
+    if (isError) {
+        return <Text>Error: {error.message}</Text>
+    }
+
+
+
 
 
     const BottomTabsData = [
@@ -114,6 +135,8 @@ export default function Home({ navigation }) {
         navigation.navigate("Report");
     };
 
+
+
     return (
         <>
             <DragDropButton onPress={handleDragDropButton} />
@@ -150,8 +173,7 @@ export default function Home({ navigation }) {
 
                 <BalanceCard
                     containerStyle={{ alignSelf: "center", marginTop: m(25) }}
-                // onPress={handleTransactionButton}
-                // isTransaction={false}
+                    balanceData={balanceData && balanceData.data ? balanceData.data : null}
                 />
 
                 <View

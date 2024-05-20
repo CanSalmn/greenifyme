@@ -12,7 +12,7 @@ export function useRegister() {
             queryClient.invalidateQueries({ queryKey: ['register'] })
             if (data) {
 
-                toast.show("Login Successful",
+                toast.show("Register Successful",
                     {
                         type: "success",
                         placement: "top",

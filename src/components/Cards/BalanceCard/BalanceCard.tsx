@@ -6,11 +6,25 @@ import { useNavigation } from "@react-navigation/native";
 import TransactionCard from "../../../components/Cards/TransactionCard";
 import { DragDropIcon } from "../../../assets/svg";
 
+interface Details {
+    date: string;
+    transactionType: boolean;
+    containerId: string;
+    price: string;
+    transactionTitle: string;
+}
+interface Transaction {
+    details: Details;
+    _id: string;
+    transactionId: string;
+    userId: string;
+    __v: number;
+}
 interface IBalanceCard {
     containerStyle?: ViewStyle;
+    balanceData: Transaction[];
 }
-
-const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
+const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle, balanceData }) => {
     const navigation = useNavigation();
     return (
         <View
@@ -66,14 +80,14 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle }) => {
                 </View>
             </View>
             <View style={{}}>
-                {lastTransactionList.map((transaction, index) => (
+                {balanceData.map((transaction, index) => (
                     <TransactionCard
-                        key={index}
-                        SvgIcon={transaction.svgIcon}
-                        title={transaction.title}
-                        date={transaction.date}
-                        price={transaction.price}
-                        isExpense={transaction.isExpense}
+                        key={transaction._id}
+                        SvgIcon={DragDropIcon}
+                        title={transaction.details.transactionTitle}
+                        date={transaction.details.date}
+                        price={Number(transaction.details.price)}
+                        isExpense={transaction.details.transactionType}
                     />
                 ))}
             </View>

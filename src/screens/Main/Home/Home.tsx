@@ -27,12 +27,11 @@ import {
 } from "react-native-gesture-handler";
 import { DragDropIcon } from "../../../assets/svg";
 
-import { useAppDispatch, useAppSelector } from '../../../redux/Task/hooks';
+import { useAppDispatch, useAppSelector } from "../../../redux/Task/hooks";
 import { useGetBalance } from "../../../service/Balance/BalanceMutation";
 import { useQuery } from "@tanstack/react-query";
 import { balance } from "../../../service/Balance";
-
-
+import { material } from "../../../service/Material";
 
 const SIZE = 80;
 
@@ -40,29 +39,36 @@ export default function Home({ navigation }) {
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
-    const { description, category } = useAppSelector(state => state.dailyTask);
+    const { description, category } = useAppSelector((state) => state.dailyTask);
 
     const [value, setValue] = React.useState<string>();
 
-    const { isPending, isError, data: balanceData, error } = useQuery({
-        queryKey: ["balance",],
+    const {
+        isPending: isPendingBalance,
+        isError: isErrorBalance,
+        data: balanceData,
+        error: balanceError,
+    } = useQuery({
+        queryKey: ["balance"],
         queryFn: () => balance(),
-
+    });
+    const {
+        isPending: isPendingMaterial,
+        isError: isErrorMaterial,
+        data: materialData,
+        error: materialError,
+    } = useQuery({
+        queryKey: ["material"],
+        queryFn: () => material(),
     });
 
-
-
-    if (isPending) {
-        return <Text>Loading...</Text>
+    if (isPendingBalance) {
+        return <Text>Loading...</Text>;
     }
 
-    if (isError) {
-        return <Text>Error: {error.message}</Text>
+    if (isErrorBalance) {
+        return <Text>Error: {balanceError.message}</Text>;
     }
-
-
-
-
 
     const BottomTabsData = [
         {
@@ -118,9 +124,9 @@ export default function Home({ navigation }) {
     const renderMaterial = ({ item }) => {
         return (
             <MaterialsCard
-                ImageSource={item.ImageSource}
                 materialTitle={item.materialTitle}
-                amount={item.amount}
+                materialId={item.materialId}
+                totalRecycling={item.totalRecycling}
                 unit={item.unit}
             />
         );
@@ -135,12 +141,10 @@ export default function Home({ navigation }) {
         navigation.navigate("Report");
     };
 
-
-
     return (
         <>
             <DragDropButton onPress={handleDragDropButton} />
-            <ScrollView
+            <ScrollView 
                 style={{
                     position: "relative",
                     flex: 1,
@@ -173,17 +177,20 @@ export default function Home({ navigation }) {
 
                 <BalanceCard
                     containerStyle={{ alignSelf: "center", marginTop: m(25) }}
-                    balanceData={balanceData && balanceData.data ? balanceData.data : null}
+                    balanceData={
+                        balanceData && balanceData.data ? balanceData.data : null
+                    }
                 />
 
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
                 >
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}>
-
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                        }}
+                    >
                         <Text
                             style={{
                                 color: "#5DB075",
@@ -194,7 +201,13 @@ export default function Home({ navigation }) {
                         >
                             Daily Tasks
                         </Text>
-                        <IconButton icon='plussquareo' iconFamily='AntDesign' size={30} iconColor={'#5DB075'} onPress={() => navigation.navigate('DailyTask')} />
+                        <IconButton
+                            icon="plussquareo"
+                            iconFamily="AntDesign"
+                            size={30}
+                            iconColor={"#5DB075"}
+                            onPress={() => navigation.navigate("DailyTask")}
+                        />
                     </View>
 
                     <FlashList
@@ -219,8 +232,9 @@ export default function Home({ navigation }) {
                     >
                         Recycleable Materials
                     </Text>
+
                     <FlashList
-                        data={MaterailData}
+                        data={materialData && materialData.data[0].materials}
                         renderItem={renderMaterial}
                         numColumns={2}
                         estimatedItemSize={200}

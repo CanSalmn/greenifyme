@@ -32,6 +32,7 @@ import { useGetBalance } from "../../../service/Balance/BalanceMutation";
 import { useQuery } from "@tanstack/react-query";
 import { balance } from "../../../service/Balance";
 import { material } from "../../../service/Material";
+import { slider } from "../../../service/Slider";
 
 const SIZE = 80;
 
@@ -61,6 +62,15 @@ export default function Home({ navigation }) {
         queryKey: ["material"],
         queryFn: () => material(),
     });
+    const {
+        isPending: isPendingSliderImage,
+        isError: isErrorSliderImage,
+        data: sliderImageData,
+        error: sliderImageError,
+    } = useQuery({
+        queryKey: ["sliderImage"],
+        queryFn: () => slider(),
+    });
 
     if (isPendingBalance) {
         return <Text>Loading...</Text>;
@@ -68,6 +78,10 @@ export default function Home({ navigation }) {
 
     if (isErrorBalance) {
         return <Text>Error: {balanceError.message}</Text>;
+    }
+
+    if (sliderImageData) {
+        console.log("sliderImageData", sliderImageData.data);
     }
 
     const BottomTabsData = [
@@ -106,7 +120,8 @@ export default function Home({ navigation }) {
     };
 
     const renderNews = ({ item }) => {
-        return <NewsCard colorGroup={item.colorGroup} newsTitle={item.newsTitle} />;
+        console.log("item", item)
+        return <NewsCard filename={item.filename} filepath={item.filepath} />;
     };
 
     const renderTask = ({ item }) => {
@@ -144,7 +159,7 @@ export default function Home({ navigation }) {
     return (
         <>
             <DragDropButton onPress={handleDragDropButton} />
-            <ScrollView 
+            <ScrollView
                 style={{
                     position: "relative",
                     flex: 1,
@@ -167,7 +182,7 @@ export default function Home({ navigation }) {
                         News
                     </Text>
                     <FlashList
-                        data={newsData}
+                        data={sliderImageData && sliderImageData.data}
                         renderItem={renderNews}
                         estimatedItemSize={200}
                         horizontal

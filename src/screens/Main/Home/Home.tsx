@@ -11,7 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "react-native-paper";
 import { w, h, m, p } from "../../../utils";
-
+import Loading from "../../../components/Loading";
+import Error from "../../../components/Error";
 import {
     TaskCard,
     BalanceCard,
@@ -59,6 +60,7 @@ export default function Home({ navigation }) {
         isError: isErrorBalance,
         data: balanceData,
         error: balanceError,
+        status,
     } = useQuery({
         queryKey: ["balance"],
         queryFn: () => balance(),
@@ -82,53 +84,6 @@ export default function Home({ navigation }) {
         queryFn: () => slider(),
     });
 
-    if (isPendingBalance || isPendingMaterial || isPendingSliderImage) {
-        return <Text>Loading...</Text>;
-    }
-
-    if (isErrorBalance) {
-        return <Text>Error: {balanceError.message}</Text>;
-    }
-
-    if (sliderImageData) {
-        // setSliderKit({ ...sliderKit, sliderLenght: sliderImageData.data.length })
-        console.log("sliderImageData", sliderImageData.data);
-    }
-
-    if (isPendingMaterial) {
-        console.log("isPendingMaterial", isPendingMaterial);
-    }
-    if (isPendingBalance) {
-        console.log("isPendingBalance", isPendingBalance);
-    }
-
-    const BottomTabsData = [
-        {
-            id: "currency-tab",
-            title: "Currency",
-            icon: <Ionicons name="create" color="#fff" size={25} />,
-            activeIcon: <Ionicons name="create" color="#4d4d4d" size={25} />,
-        },
-        {
-            id: "converter-tab",
-            title: "Converter",
-            icon: <Ionicons name="create" color="#fff" size={25} />,
-            activeIcon: <Ionicons name="create" color="#4d4d4d" size={25} />,
-        },
-        {
-            id: "gold-tab",
-            title: "Gold",
-            icon: <Ionicons name="create" color="#fff" size={25} />,
-            activeIcon: <Ionicons name="create" color="#4d4d4d" size={25} />,
-        },
-        {
-            id: "settings-tab",
-            title: "Settings",
-            icon: <Ionicons name="create" color="#fff" size={25} />,
-            activeIcon: <Ionicons name="create" color="#4d4d4d" size={25} />,
-        },
-    ];
-
     const onPressEdit = () => {
         console.log("onpressEdit pressed");
     };
@@ -138,13 +93,12 @@ export default function Home({ navigation }) {
     };
 
     const renderNews = ({ item }) => {
-        console.log("item", item);
+
         return (
             <Image
                 source={{ uri: `http://127.0.0.1:8080/${item.filepath}` }}
                 style={{ width: Dimensions.get("screen").width, height: 250 }}
-                resizeMode='stretch'
-
+                resizeMode="stretch"
             />
         );
     };
@@ -180,6 +134,37 @@ export default function Home({ navigation }) {
     const handleDragDropButton = () => {
         navigation.navigate("Report");
     };
+
+    if (isPendingBalance || isPendingMaterial || isPendingSliderImage) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    //  backgroundColor: 'rgba(93, 176, 117, 0.6)',
+                    backgroundColor: "transparent",
+                }}
+            >
+                <Loading />
+            </View>
+        );
+    }
+    if (isErrorBalance || isErrorMaterial || isErrorSliderImage) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    //  backgroundColor: 'rgba(93, 176, 117, 0.6)',
+                    backgroundColor: "transparent",
+                }}
+            >
+                <Error />
+            </View>
+        );
+    }
 
     return (
         <>
@@ -246,9 +231,7 @@ export default function Home({ navigation }) {
                 </View>
                 <BalanceCard
                     containerStyle={{ alignSelf: "center", marginTop: m(25) }}
-                    balanceData={
-                        balanceData && balanceData.data ? balanceData.data : null
-                    }
+                    balanceData={balanceData && balanceData.data}
                 />
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}

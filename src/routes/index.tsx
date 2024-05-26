@@ -27,7 +27,7 @@ const RootNavigator = () => {
     <SafeAreaProvider>
 
       <NavigationContainer >
-        <Stack.Navigator initialRouteName='SPLASH' screenOptions={{
+        <Stack.Navigator initialRouteName='DashBoard' screenOptions={{
           headerShown: false,
         }}>
           <Stack.Group navigationKey="SPLASH">

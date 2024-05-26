@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Dimensions, ScrollView, Text, View, StyleSheet } from "react-native";
+import {
+    Dimensions,
+    ScrollView,
+    Text,
+    View,
+    StyleSheet,
+    Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useTheme } from "react-native-paper";
@@ -7,7 +14,6 @@ import { w, h, m, p } from "../../../utils";
 
 import {
     TaskCard,
-    NewsCard,
     BalanceCard,
     MaterialsCard,
 } from "../../../components/Cards";
@@ -26,7 +32,7 @@ import {
     GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import { DragDropIcon } from "../../../assets/svg";
-
+import Carousel, { Pagination } from "react-native-snap-carousel";
 import { useAppDispatch, useAppSelector } from "../../../redux/Task/hooks";
 import { useGetBalance } from "../../../service/Balance/BalanceMutation";
 import { useQuery } from "@tanstack/react-query";
@@ -37,6 +43,10 @@ import { slider } from "../../../service/Slider";
 const SIZE = 80;
 
 export default function Home({ navigation }) {
+    const [sliderKit, setSliderKit] = React.useState({
+        sliderLenght: 0,
+        activeIndex: 0,
+    });
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
@@ -72,7 +82,7 @@ export default function Home({ navigation }) {
         queryFn: () => slider(),
     });
 
-    if (isPendingBalance) {
+    if (isPendingBalance || isPendingMaterial || isPendingSliderImage) {
         return <Text>Loading...</Text>;
     }
 
@@ -81,7 +91,15 @@ export default function Home({ navigation }) {
     }
 
     if (sliderImageData) {
+        // setSliderKit({ ...sliderKit, sliderLenght: sliderImageData.data.length })
         console.log("sliderImageData", sliderImageData.data);
+    }
+
+    if (isPendingMaterial) {
+        console.log("isPendingMaterial", isPendingMaterial);
+    }
+    if (isPendingBalance) {
+        console.log("isPendingBalance", isPendingBalance);
     }
 
     const BottomTabsData = [
@@ -120,8 +138,15 @@ export default function Home({ navigation }) {
     };
 
     const renderNews = ({ item }) => {
-        console.log("item", item)
-        return <NewsCard filename={item.filename} filepath={item.filepath} />;
+        console.log("item", item);
+        return (
+            <Image
+                source={{ uri: `http://127.0.0.1:8080/${item.filepath}` }}
+                style={{ width: Dimensions.get("screen").width, height: 250 }}
+                resizeMode='stretch'
+
+            />
+        );
     };
 
     const renderTask = ({ item }) => {
@@ -167,7 +192,6 @@ export default function Home({ navigation }) {
                 }}
             >
                 <Header title="Home" />
-
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
                 >
@@ -181,22 +205,51 @@ export default function Home({ navigation }) {
                     >
                         News
                     </Text>
-                    <FlashList
-                        data={sliderImageData && sliderImageData.data}
-                        renderItem={renderNews}
-                        estimatedItemSize={200}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                    />
+                    <View style={{ position: "relative" }}>
+                        <Carousel
+                            data={sliderImageData && sliderImageData.data}
+                            renderItem={renderNews}
+                            sliderWidth={Dimensions.get("screen").width}
+                            itemWidth={Dimensions.get("screen").width}
+                            layout="default"
+                            autoplay
+                            loop
+                            autoplayDelay={500}
+                            autoplayInterval={3500}
+                            activeSlideOffset={0}
+                            inactiveSlideScale={1}
+                            layoutCardOffset={20}
+                            onSnapToItem={(index) =>
+                                setSliderKit({ ...sliderKit, activeIndex: index })
+                            }
+                        />
+                        <Pagination
+                            dotsLength={sliderImageData && sliderImageData.data.length}
+                            activeDotIndex={sliderKit.activeIndex}
+                            containerStyle={{
+                                position: "absolute",
+                                bottom: 0,
+                                alignSelf: "center",
+                            }}
+                            dotStyle={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                marginHorizontal: 5,
+                                backgroundColor: "#5DB075",
+                            }}
+                            inactiveDotStyle={{}}
+                            inactiveDotOpacity={0.6}
+                            inactiveDotScale={0.6}
+                        />
+                    </View>
                 </View>
-
                 <BalanceCard
                     containerStyle={{ alignSelf: "center", marginTop: m(25) }}
                     balanceData={
                         balanceData && balanceData.data ? balanceData.data : null
                     }
                 />
-
                 <View
                     style={{ minHeight: h(100), width: Dimensions.get("screen").width }}
                 >
@@ -224,7 +277,6 @@ export default function Home({ navigation }) {
                             onPress={() => navigation.navigate("DailyTask")}
                         />
                     </View>
-
                     <FlashList
                         data={TaskData}
                         renderItem={renderTask}
@@ -233,7 +285,6 @@ export default function Home({ navigation }) {
                         showsHorizontalScrollIndicator={false}
                     />
                 </View>
-
                 <View
                     style={{ minHeight: h(150), width: Dimensions.get("screen").width }}
                 >

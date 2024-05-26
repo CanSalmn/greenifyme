@@ -12,7 +12,6 @@ export async function register(data) {
         });
         return result;
     } catch (error) {
-        console.log("hatataaaaaa in serves request page", error);
-        return false;
+        throw new Error()
     }
 }

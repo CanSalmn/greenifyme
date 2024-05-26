@@ -8,7 +8,6 @@ export async function balance() {
         });
         return result;
     } catch (error) {
-        console.log(error)
-        return false;
+        throw new Error()
     }
 }

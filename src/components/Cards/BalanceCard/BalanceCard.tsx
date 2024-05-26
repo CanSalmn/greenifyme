@@ -80,7 +80,7 @@ const BalanceCard: React.FC<IBalanceCard> = ({ containerStyle, balanceData }) =>
                 </View>
             </View>
             <View style={{}}>
-                {balanceData.map((transaction, index) => (
+                {balanceData && balanceData.map((transaction, index) => (
                     <TransactionCard
                         key={transaction._id}
                         SvgIcon={DragDropIcon}

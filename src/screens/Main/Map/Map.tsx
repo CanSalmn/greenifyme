@@ -36,11 +36,12 @@ import {
 } from "./utils/utils";
 import * as Location from "expo-location";
 import { useFocusEffect } from "@react-navigation/native";
-
-
+import { useQuery } from "@tanstack/react-query";
+import { containers } from "../../../service/Containers";
+import Loading from "../../../components/Loading";
+import Error from "../../../components/Error";
 
 const isIos = Platform.OS === "ios" ? true : false;
-
 
 const initialRegion = {
     latitude: 41.6759,
@@ -48,7 +49,6 @@ const initialRegion = {
     latitudeDelta: 0.001,
     longitudeDelta: 0.001,
 };
-
 
 type markerType = {
     latitude: number;
@@ -60,15 +60,20 @@ type markerType = {
 export default function Map() {
     const insets = useSafeAreaInsets();
     const [region, setRegion] = React.useState<Region>(initialRegion);
-
     const [selectedItem, setSelectedItem] = useState<markerType>();
     const snapPoints = useMemo(() => ["25%"], []);
     const bottomSheetRef = useRef<BottomSheet>(null);
-
     const mapRef = useRef<MapView>(null);
-
     const [errorMsg, setErrorMsg] = useState(null);
-
+    const {
+        isPending: isPendingContainers,
+        isError: isErrorContainers,
+        data: containersData,
+        error: containersError,
+    } = useQuery({
+        queryKey: ["containers"],
+        queryFn: () => containers(),
+    });
     const handleSheetChanges = useCallback((index?: number) => {
         bottomSheetRef.current?.expand();
     }, []);
@@ -85,11 +90,7 @@ export default function Map() {
         ),
         []
     );
-
-    useEffect(() => {
-
-    }, []);
-
+    useEffect(() => { }, []);
     useEffect(() => {
         const getUserLocation = async () => {
             console.log("called");
@@ -109,7 +110,6 @@ export default function Map() {
 
         getUserLocation();
     }, []);
-
 
     let text = "Waiting..";
     if (errorMsg) {
@@ -136,6 +136,37 @@ export default function Map() {
         });
     };
 
+    if (isPendingContainers) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    //  backgroundColor: 'rgba(93, 176, 117, 0.6)',
+                    backgroundColor: "transparent",
+                }}
+            >
+                <Loading />
+            </View>
+        );
+    }
+    if (isErrorContainers) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    //  backgroundColor: 'rgba(93, 176, 117, 0.6)',
+                    backgroundColor: "transparent",
+                }}
+            >
+                <Error />
+            </View>
+        );
+    }
+
     return (
         <View
             style={{
@@ -158,42 +189,43 @@ export default function Map() {
                 showsUserLocation
                 showsPointsOfInterest={false}
             >
-                {coordinateList.map((marker: markerType, index: number) => (
-                    <Marker
-                        key={index}
-                        draggable={true}
-                        stopPropagation
-                        onPress={() => {
-                            setSelectedItem(marker);
-                            handleSheetChanges();
-                        }}
-                        coordinate={{
-                            longitude: marker.longitude,
-                            latitude: marker.latitude,
-                        }}
-                        title={marker.title}
-                        description={marker.description}
-                    >
-                        <Pressable
-                            onPress={() => setSelectedItem(marker)}
-                            style={{
-                                width: "auto",
-                                backgroundColor: "rgba(255,255,255,0.7)",
-                                paddingHorizontal: 6,
-                                paddingVertical: 6,
-                                borderRadius: 12,
-                                alignItems: "center",
-                                marginHorizontal: 10,
-                                marginVertical: 10,
+                {containersData &&
+                    containersData.data.map((marker: any, index: number) => (
+                        <Marker
+                            key={index}
+                            draggable={true}
+                            stopPropagation
+                            onPress={() => {
+                                setSelectedItem(marker);
+                                handleSheetChanges();
                             }}
+                            coordinate={{
+                                longitude: marker.location.longitude,
+                                latitude: marker.location.latitude,
+                            }}
+                            title={marker.title}
+                            description={marker.description}
                         >
-                            <Image
-                                source={require("./../../../../assets/images/mapIcon.png")}
-                                style={{ height: 35, width: 35 }}
-                            />
-                        </Pressable>
-                    </Marker>
-                ))}
+                            <Pressable
+                                onPress={() => setSelectedItem(marker)}
+                                style={{
+                                    width: "auto",
+                                    backgroundColor: "rgba(255,255,255,0.7)",
+                                    paddingHorizontal: 6,
+                                    paddingVertical: 6,
+                                    borderRadius: 12,
+                                    alignItems: "center",
+                                    marginHorizontal: 10,
+                                    marginVertical: 10,
+                                }}
+                            >
+                                <Image
+                                    source={require("./../../../../assets/images/mapIcon.png")}
+                                    style={{ height: 35, width: 35 }}
+                                />
+                            </Pressable>
+                        </Marker>
+                    ))}
 
                 {/* {showDirections && location && destination && (
                     <MapViewDirections
